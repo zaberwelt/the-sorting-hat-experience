@@ -6,7 +6,3 @@ Features:
 - House icons appear after sorting
 - Aesthetic Hogwarts background
 
-## How to Use
-1. Clone this repository
-2. Open `index.html` in your browser
-3. Click "Sort Me!" to be sorted into a house
