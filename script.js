@@ -60,10 +60,12 @@ startButton.addEventListener("click", () => {
 
 function showQuestion() {
   const q = questions[currentQuestion];
+  // Gunakan backticks (`) untuk membungkus HTML string ini
   quizScreen.innerHTML = `<h2>${q.question}</h2>` +
     q.options.map(opt => `<button onclick="selectOption('${opt.house}')">${opt.text}</button>`).join('');
 }
 
+// Tambahkan window. agar fungsi terbaca oleh tombol yang dibuat dinamis
 window.selectOption = function(house) {
   scores[house]++;
   currentQuestion++;
@@ -77,10 +79,9 @@ window.selectOption = function(house) {
 function showResult() {
   quizScreen.style.display = "none";
   resultScreen.style.display = "block";
-  
   const sortedHouse = Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
   
-  // Gunakan backticks (`) untuk template literals
+  // Gunakan backticks (`) agar variabel terdeteksi
   houseResult.textContent = `You belong to ${sortedHouse}!`;
   houseResult.style.color = colors[sortedHouse];
   houseIcon.src = icons[sortedHouse];
