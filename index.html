@@ -2,189 +2,154 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hogwarts Sorting Ceremony | Official Experience</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hogwarts Sorting Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #c39d5e;
-            --gold-bright: #f4cf8d;
             --bg-dark: #020203;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            margin: 0; padding: 0;
             background: var(--bg-dark);
             color: #fff;
             font-family: 'Playfair Display', serif;
             display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; overflow: hidden;
+            min-height: 100vh; overflow-x: hidden;
         }
 
-        /* Latar Belakang Magis Animasi Partikel */
-        .magic-canvas {
+        /* Latar Belakang Bintang */
+        .stars {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at center, #131325 0%, #020203 100%);
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
             z-index: -1;
         }
 
-        .magic-canvas::after {
-            content: ""; position: absolute; width: 100%; height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.5; animation: pulse 4s infinite alternate;
-        }
-
-        @keyframes pulse { from { opacity: 0.3; } to { opacity: 0.6; } }
-
-        /* Frame Utama Mewah */
         .main-card {
-            position: relative; width: 92%; max-width: 500px;
-            padding: 60px 30px; text-align: center;
-            background: rgba(0, 0, 0, 0.85);
+            position: relative; width: 90%; max-width: 400px;
+            padding: 40px 20px; text-align: center;
+            background: rgba(0, 0, 0, 0.8);
             border: 1px solid var(--gold);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 0 50px rgba(0,0,0,1), inset 0 0 30px rgba(195, 157, 94, 0.1);
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 40px rgba(0,0,0,1);
         }
 
-        /* Ornamen Emas */
+        /* Ornamen agar tidak meluber */
         .ornament {
-            position: absolute; width: 40px; height: 40px;
-            border: 2px solid var(--gold);
+            position: absolute; width: 30px; height: 30px; border: 1px solid var(--gold);
         }
         .top-l { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
         .bot-r { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
 
         h1 {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 1.6rem; color: var(--gold);
-            letter-spacing: 4px; margin-bottom: 25px;
-            text-shadow: 0 0 20px rgba(195, 157, 94, 0.6);
+            font-size: 1.4rem; color: var(--gold);
+            letter-spacing: 2px; margin-bottom: 20px;
         }
 
-        .hat-hero {
-            width: 170px; margin-bottom: 20px;
-            filter: drop-shadow(0 0 25px var(--gold));
-            animation: floating 5s ease-in-out infinite;
+        .hat-img {
+            width: 140px; height: auto; margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px var(--gold));
+            animation: float 4s ease-in-out infinite;
         }
 
-        @keyframes floating {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-20px) scale(1.05); }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
 
-        /* Tombol & Opsi */
         .magic-btn {
-            background: none; border: 1px solid var(--gold);
-            color: var(--gold); padding: 16px 40px;
-            font-family: 'Cinzel Decorative', serif; font-size: 13px;
-            letter-spacing: 3px; cursor: pointer; transition: 0.5s;
-            margin-top: 20px; text-transform: uppercase;
+            background: transparent; border: 1px solid var(--gold);
+            color: var(--gold); padding: 12px 25px;
+            font-family: 'Cinzel Decorative', serif; font-size: 12px;
+            cursor: pointer; transition: 0.4s; letter-spacing: 2px;
         }
 
-        .magic-btn:hover {
-            background: var(--gold); color: #000;
-            box-shadow: 0 0 30px var(--gold);
-        }
-
-        .quiz-grid { display: grid; gap: 18px; margin-top: 30px; }
+        .magic-btn:hover { background: var(--gold); color: #000; }
 
         .option {
-            padding: 20px; background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(195, 157, 94, 0.2);
-            font-size: 1rem; cursor: pointer; transition: 0.4s;
-            font-style: italic; color: #ddd;
+            padding: 15px; margin: 10px 0;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(195,157,94,0.3);
+            cursor: pointer; transition: 0.3s; font-size: 0.9rem;
         }
 
-        .option:hover {
-            border-color: var(--gold); color: #fff;
-            background: rgba(195, 157, 94, 0.1);
-            transform: translateX(8px);
-        }
+        .option:hover { border-color: var(--gold); background: rgba(195,157,94,0.1); }
 
-        /* Hasil Akhir */
-        .crest-reveal {
-            width: 200px; margin: 20px 0;
-            animation: zoomFade 2s ease-out;
-        }
-
-        @keyframes zoomFade {
-            0% { opacity: 0; transform: scale(0.5); filter: brightness(0); }
-            100% { opacity: 1; transform: scale(1); filter: brightness(1); }
-        }
-
+        /* Style Hasil agar tidak meluber */
         .house-name {
-            font-size: 3.5rem; margin: 0; font-family: 'Cinzel Decorative';
-            text-shadow: 0 0 20px rgba(0,0,0,0.8);
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.2rem; /* Ukuran dikurangi agar tidak pecah di HP */
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            word-wrap: break-word;
         }
+
+        .crest-img {
+            width: 160px; height: auto; margin: 15px 0;
+            animation: zoom 1.5s ease-out;
+        }
+
+        @keyframes zoom { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
 
         .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="magic-canvas"></div>
+    <div class="stars"></div>
 
     <div class="main-card">
         <div class="ornament top-l"></div>
         <div class="ornament bot-r"></div>
 
         <div id="scr-welcome">
-            <img src="https://www.pngall.com/wp-content/uploads/11/Harry-Potter-Sorting-Hat-PNG-Image.png" class="hat-hero" alt="Sorting Hat">
+            <img src="https://i.ibb.co/5v6mV9m/sorting-hat.png" class="hat-img" alt="Sorting Hat">
             <h1>Upacara Seleksi</h1>
-            <p style="color: #888; font-style: italic; line-height: 1.8;">
-                "Tak ada yang tersembunyi dalam pikiranmu yang tidak bisa kulihat... Majulah dan temukan takdirmu."
+            <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 20px; font-style: italic;">
+                "Masuklah ke dalam pikiranmu..."
             </p>
-            <button class="magic-btn" onclick="startQuiz()">Masuk Ke Aula Besar</button>
+            <button class="magic-btn" onclick="startQuiz()">Mulai Seleksi</button>
         </div>
 
         <div id="scr-quiz" class="hidden">
-            <div id="progress" style="color: var(--gold); font-size: 10px; letter-spacing: 5px; margin-bottom: 15px;"></div>
-            <h2 id="question-text" style="font-style: italic; font-family: 'Playfair Display'; text-transform: none;"></h2>
-            <div id="options-grid" class="quiz-grid"></div>
+            <h2 id="q-text" style="font-size: 1.1rem; margin-bottom: 20px;"></h2>
+            <div id="options-box"></div>
         </div>
 
         <div id="scr-result" class="hidden">
-            <p style="letter-spacing: 5px; color: var(--gold); font-size: 0.7rem;">TAKDIRMU TELAH DITETAPKAN</p>
+            <p style="font-size: 0.7rem; letter-spacing: 3px; color: var(--gold);">TAKDIRMU ADALAH</p>
             <h1 id="res-house" class="house-name"></h1>
-            <img id="res-crest" src="" class="crest-reveal">
-            <p id="res-desc" style="line-height: 1.8; color: #ccc; font-style: italic; font-size: 1rem; padding: 0 10px;"></p>
-            <div style="margin-top: 40px; border-top: 1px solid rgba(195,157,94,0.2); padding-top: 20px;">
-                <p style="font-size: 9px; letter-spacing: 2px; color: var(--gold); opacity: 0.6;">CATATAN PERMANEN | TIDAK DAPAT DIULANG</p>
-            </div>
+            <img id="res-crest" src="" class="crest-img">
+            <p id="res-desc" style="font-size: 0.9rem; line-height: 1.6; color: #ccc; font-style: italic;"></p>
+            <p style="margin-top: 20px; font-size: 8px; color: var(--gold); opacity: 0.5;">HASIL PERMANEN</p>
         </div>
     </div>
 
     <script>
         const questions = [
-            { q: "Di sebuah jalanan sunyi, benda apa yang paling menarik perhatianmu?", 
-              o: [{t: "Pedang perak yang bersinar", h: "Gryffindor"}, {t: "Buku kuno berdebu", h: "Ravenclaw"}, {t: "Cincin zamrud yang misterius", h: "Slytherin"}, {t: "Tanaman obat yang harum", h: "Hufflepuff"}] },
-            { q: "Apa yang paling kamu takuti jika orang lain menilaimu?", 
-              o: [{t: "Dianggap sebagai pengecut", h: "Gryffindor"}, {t: "Dianggap tidak kompeten", h: "Slytherin"}, {t: "Dianggap bodoh", h: "Ravenclaw"}, {t: "Dianggap egois", h: "Hufflepuff"}] },
-            { q: "Jika kamu bisa menciptakan ramuan, ramuan itu akan memberimu...", 
-              o: [{t: "Keberanian tanpa batas", h: "Gryffindor"}, {t: "Kebijaksanaan abadi", h: "Ravenclaw"}, {t: "Kekuasaan yang besar", h: "Slytherin"}, {t: "Kebahagiaan yang tulus", h: "Hufflepuff"}] },
-            { q: "Bintang mana yang akan kamu ikuti di malam hari?", 
-              o: [{t: "Bintang yang paling terang", h: "Gryffindor"}, {t: "Bintang yang paling jauh", h: "Ravenclaw"}, {t: "Bintang yang tampak paling tajam", h: "Slytherin"}, {t: "Bintang yang cahayanya paling tenang", h: "Hufflepuff"}] },
-            { q: "Kualitas apa yang paling ingin kamu wariskan pada dunia?", 
-              o: [{t: "Kepahlawanan", h: "Gryffindor"}, {t: "Inovasi & Pengetahuan", h: "Ravenclaw"}, {t: "Kejayaan", h: "Slytherin"}, {t: "Kedamaian & Keadilan", h: "Hufflepuff"}] }
+            { q: "Apa yang paling kamu hargai?", o: [{t: "Keberanian", h: "Gryffindor"}, {t: "Kesetiaan", h: "Hufflepuff"}, {t: "Kecerdasan", h: "Ravenclaw"}, {t: "Ambisi", h: "Slytherin"}] },
+            { q: "Pilih hewan peliharaanmu:", o: [{t: "Burung Hantu", h: "Ravenclaw"}, {t: "Kucing", h: "Gryffindor"}, {t: "Tikus", h: "Hufflepuff"}, {t: "Ular", h: "Slytherin"}] },
+            { q: "Saat menghadapi bahaya, kamu...", o: [{t: "Melawan", h: "Gryffindor"}, {t: "Bersembunyi", h: "Hufflepuff"}, {t: "Berpikir", h: "Ravenclaw"}, {t: "Mengatur strategi", h: "Slytherin"}] }
         ];
 
-        const houseData = {
-            Gryffindor: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/b/b1/Gryffindor_ClearBG.png", desc: "Tempat bagi mereka yang berani dan ksatria. Keberanian dan tekadmu akan menuntunmu ke jalan pahlawan.", color: "#ae0001" },
-            Slytherin: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/0/00/Slytherin_ClearBG.png", desc: "Cerdik dan ambisius. Kamu tidak akan berhenti sebelum mencapai puncak kejayaan yang kamu impikan.", color: "#2a623d" },
-            Ravenclaw: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/4/4e/Ravenclaw_ClearBG.png", desc: "Kebijaksanaan dan kreativitas mengalir dalam darahmu. Kamu adalah pencari kebenaran sejati.", color: "#222f5b" },
-            Hufflepuff: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/0/06/Hufflepuff_ClearBG.png", desc: "Setia, jujur, dan pekerja keras. Kamu menghargai persahabatan di atas segalanya.", color: "#ecb939" }
+        const data = {
+            Gryffindor: { c: "#ae0001", i: "https://i.ibb.co/z5VDfK6/gryffindor.png", d: "Tempat bagi mereka yang berani dan ksatria." },
+            Slytherin: { c: "#2a623d", i: "https://i.ibb.co/JTg55gN/slytherin.png", d: "Cerdik dan ambisius untuk mencapai tujuan." },
+            Ravenclaw: { c: "#222f5b", i: "https://i.ibb.co/MKQ1sBc/ravenclaw.png", d: "Bijaksana dan kreatif dalam berpikir." },
+            Hufflepuff: { c: "#ecb939", i: "https://i.ibb.co/7rQQ6cK/hufflepuff.png", d: "Setia, jujur, dan pekerja keras." }
         };
 
         let scores = { Gryffindor: 0, Hufflepuff: 0, Ravenclaw: 0, Slytherin: 0 };
-        let currentIdx = 0;
+        let idx = 0;
 
-        // CEK APAKAH SUDAH PERNAH KUIS
         window.onload = () => {
-            const saved = localStorage.getItem('eternal_house_final');
-            if (saved) { renderFinal(saved); }
+            const saved = localStorage.getItem('sorted_house');
+            if(saved) showFinal(saved);
         };
 
         function startQuiz() {
@@ -194,43 +159,38 @@
         }
 
         function loadQ() {
-            const q = questions[currentIdx];
-            document.getElementById('progress').innerText = `LANGKAH ${currentIdx + 1} DARI 5`;
-            document.getElementById('question-text').innerText = `"${q.q}"`;
-            const grid = document.getElementById('options-grid');
-            grid.innerHTML = '';
-
+            const q = questions[idx];
+            document.getElementById('q-text').innerText = q.q;
+            const box = document.getElementById('options-box');
+            box.innerHTML = '';
             q.o.forEach(opt => {
-                const btn = document.createElement('div');
-                btn.className = 'option';
-                btn.innerText = opt.t;
-                btn.onclick = () => {
+                const div = document.createElement('div');
+                div.className = 'option';
+                div.innerText = opt.t;
+                div.onclick = () => {
                     scores[opt.h]++;
-                    currentIdx++;
-                    if(currentIdx < questions.length) loadQ();
-                    else finalize();
+                    idx++;
+                    if(idx < questions.length) loadQ(); else finish();
                 };
-                grid.appendChild(btn);
+                box.appendChild(div);
             });
         }
 
-        function finalize() {
+        function finish() {
             const winner = Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
-            localStorage.setItem('eternal_house_final', winner);
-            renderFinal(winner);
+            localStorage.setItem('sorted_house', winner);
+            showFinal(winner);
         }
 
-        function renderFinal(house) {
+        function showFinal(house) {
             document.getElementById('scr-welcome').classList.add('hidden');
             document.getElementById('scr-quiz').classList.add('hidden');
-            const res = document.getElementById('scr-result');
-            res.classList.remove('hidden');
-
-            const data = houseData[house];
+            document.getElementById('scr-result').classList.remove('hidden');
+            
             document.getElementById('res-house').innerText = house.toUpperCase();
-            document.getElementById('res-house').style.color = data.color;
-            document.getElementById('res-crest').src = data.img;
-            document.getElementById('res-desc').innerText = data.desc;
+            document.getElementById('res-house').style.color = data[house].c;
+            document.getElementById('res-crest').src = data[house].i;
+            document.getElementById('res-desc').innerText = data[house].d;
         }
     </script>
 </body>
