@@ -1,39 +1,52 @@
 body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background: url('assets/background/hogwarts.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: #fff;
-    text-align: center;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url('https://i.ibb.co/V3YN5Yd/hogwarts-bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  text-align: center;
 }
 
 .start-screen, .quiz-screen, .result-screen {
-    padding: 50px;
+  padding: 50px;
 }
 
 .hat {
-    width: 250px;
-    animation: wiggle 2s infinite;
+  width: 250px;
+  animation: wiggle 2s infinite;
 }
 
 button {
-    margin-top: 20px;
-    padding: 15px 30px;
-    font-size: 20px;
-    background: #D3A625;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s;
+  margin-top: 20px;
+  padding: 15px 30px;
+  font-size: 20px;
+  background: #D3A625;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
 }
 
 button:hover {
-    background: #740001;
-    color: #fff;
+  background: #740001;
+  color: #fff;
 }
 
 .house-icon {
-    width: 150px;
+  width: 150px;
+  margin-top: 20px;
+  animation: sparkle 2s infinite;
+}
+
+@keyframes wiggle {
+  0%,100% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+}
+
+@keyframes sparkle {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
     margin-top: 20px;
     animation: sparkle 2s infinite;
 }
