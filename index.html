@@ -3,219 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hogwarts Sorting Experience | Official</title>
+    <title>Hogwarts Sorting Ceremony | Official Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #c39d5e;
             --gold-bright: #f4cf8d;
-            --bg-deep: #030305;
+            --bg-dark: #020203;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             margin: 0; padding: 0;
-            background: var(--bg-deep);
+            background: var(--bg-dark);
             color: #fff;
             font-family: 'Playfair Display', serif;
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh; overflow: hidden;
         }
 
-        /* Background Atmosferik Mewah */
-        .ambient-bg {
+        /* Latar Belakang Magis Animasi Partikel */
+        .magic-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #1a1a2e 0%, #030305 100%);
+            background: radial-gradient(circle at center, #131325 0%, #020203 100%);
             z-index: -1;
         }
 
-        .ambient-bg::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        .magic-canvas::after {
+            content: ""; position: absolute; width: 100%; height: 100%;
             background: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.4;
+            opacity: 0.5; animation: pulse 4s infinite alternate;
         }
 
-        /* Mist/Kabut Bergerak */
-        .mist {
-            position: absolute; width: 200%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(195, 157, 94, 0.05), transparent);
-            animation: mistMove 15s linear infinite;
-            z-index: -1;
+        @keyframes pulse { from { opacity: 0.3; } to { opacity: 0.6; } }
+
+        /* Frame Utama Mewah */
+        .main-card {
+            position: relative; width: 92%; max-width: 500px;
+            padding: 60px 30px; text-align: center;
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid var(--gold);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(0,0,0,1), inset 0 0 30px rgba(195, 157, 94, 0.1);
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes mistMove {
-            from { transform: translateX(-50%); }
-            to { transform: translateX(0%); }
-        }
-
-        .main-frame {
-            position: relative; width: 95%; max-width: 600px;
-            padding: 60px 40px; text-align: center;
-            border: 1px solid rgba(195, 157, 94, 0.3);
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(25px);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.9);
-            transition: all 1s ease;
-        }
-
-        /* Ornamen Sudut HP Style */
-        .corner {
-            position: absolute; width: 30px; height: 30px;
+        /* Ornamen Emas */
+        .ornament {
+            position: absolute; width: 40px; height: 40px;
             border: 2px solid var(--gold);
         }
-        .top-left { top: 15px; left: 15px; border-right: 0; border-bottom: 0; }
-        .bottom-right { bottom: 15px; right: 15px; border-left: 0; border-top: 0; }
+        .top-l { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+        .bot-r { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
 
         h1 {
             font-family: 'Cinzel Decorative', serif;
-            font-size: 1.8rem; color: var(--gold);
-            letter-spacing: 5px; margin-bottom: 30px;
-            text-shadow: 0 0 15px rgba(195, 157, 94, 0.5);
+            font-size: 1.6rem; color: var(--gold);
+            letter-spacing: 4px; margin-bottom: 25px;
+            text-shadow: 0 0 20px rgba(195, 157, 94, 0.6);
         }
 
         .hat-hero {
-            width: 160px; margin-bottom: 20px;
+            width: 170px; margin-bottom: 20px;
             filter: drop-shadow(0 0 25px var(--gold));
-            animation: floating 6s ease-in-out infinite;
+            animation: floating 5s ease-in-out infinite;
         }
 
         @keyframes floating {
-            0%, 100% { transform: translateY(0) rotate(-3deg); }
-            50% { transform: translateY(-25px) rotate(3deg); }
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
         }
 
-        /* Tombol & Pilihan */
-        .btn-gold {
-            background: transparent; border: 1px solid var(--gold);
-            color: var(--gold); padding: 18px 45px;
-            font-family: 'Cinzel Decorative', serif; font-size: 14px;
+        /* Tombol & Opsi */
+        .magic-btn {
+            background: none; border: 1px solid var(--gold);
+            color: var(--gold); padding: 16px 40px;
+            font-family: 'Cinzel Decorative', serif; font-size: 13px;
             letter-spacing: 3px; cursor: pointer; transition: 0.5s;
             margin-top: 20px; text-transform: uppercase;
         }
 
-        .btn-gold:hover {
+        .magic-btn:hover {
             background: var(--gold); color: #000;
-            box-shadow: 0 0 40px var(--gold);
+            box-shadow: 0 0 30px var(--gold);
         }
 
-        .option-box {
-            display: grid; gap: 20px; margin-top: 40px;
-        }
+        .quiz-grid { display: grid; gap: 18px; margin-top: 30px; }
 
-        .option-item {
-            padding: 22px; background: rgba(255, 255, 255, 0.02);
+        .option {
+            padding: 20px; background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(195, 157, 94, 0.2);
-            font-size: 1.1rem; cursor: pointer; transition: 0.4s;
-            position: relative; overflow: hidden;
+            font-size: 1rem; cursor: pointer; transition: 0.4s;
+            font-style: italic; color: #ddd;
         }
 
-        .option-item::before {
-            content: ""; position: absolute; left: -100%; top: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(195, 157, 94, 0.1), transparent);
-            transition: 0.5s;
+        .option:hover {
+            border-color: var(--gold); color: #fff;
+            background: rgba(195, 157, 94, 0.1);
+            transform: translateX(8px);
         }
 
-        .option-item:hover {
-            border-color: var(--gold); color: var(--gold-bright);
-            background: rgba(195, 157, 94, 0.08);
-            transform: translateY(-3px);
+        /* Hasil Akhir */
+        .crest-reveal {
+            width: 200px; margin: 20px 0;
+            animation: zoomFade 2s ease-out;
         }
 
-        .option-item:hover::before { left: 100%; }
-
-        /* Hasil Akhir Mewah */
-        .house-crest {
-            width: 220px; margin-bottom: 20px;
-            animation: crestScale 2.5s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        @keyframes crestScale {
-            0% { opacity: 0; transform: scale(0.5) rotate(-20deg); filter: brightness(0); }
-            100% { opacity: 1; transform: scale(1) rotate(0); filter: brightness(1); }
+        @keyframes zoomFade {
+            0% { opacity: 0; transform: scale(0.5); filter: brightness(0); }
+            100% { opacity: 1; transform: scale(1); filter: brightness(1); }
         }
 
         .house-name {
-            font-size: 4rem; margin: 0; font-family: 'Cinzel Decorative';
-            background: linear-gradient(to bottom, #fff, var(--gold));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-size: 3.5rem; margin: 0; font-family: 'Cinzel Decorative';
+            text-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
 
         .hidden { display: none; }
-        .fade-in { animation: fadeIn 2s forwards; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; } to { opacity: 1; }
-        }
     </style>
 </head>
 <body>
 
-    <div class="ambient-bg"></div>
-    <div class="mist"></div>
+    <div class="magic-canvas"></div>
 
-    <div class="main-frame" id="main-container">
-        <div class="corner top-left"></div>
-        <div class="corner bottom-right"></div>
+    <div class="main-card">
+        <div class="ornament top-l"></div>
+        <div class="ornament bot-r"></div>
 
         <div id="scr-welcome">
-            <img src="https://www.pngall.com/wp-content/uploads/11/Harry-Potter-Sorting-Hat-PNG-Image.png" class="hat-hero">
-            <h1>The Sorting Ceremony</h1>
-            <p style="font-style: italic; color: #888; font-size: 1.1rem; line-height: 1.8;">
-                "There is nothing hidden in your head the Sorting Hat can't see... <br>Step forward and discover where you belong."
+            <img src="https://www.pngall.com/wp-content/uploads/11/Harry-Potter-Sorting-Hat-PNG-Image.png" class="hat-hero" alt="Sorting Hat">
+            <h1>Upacara Seleksi</h1>
+            <p style="color: #888; font-style: italic; line-height: 1.8;">
+                "Tak ada yang tersembunyi dalam pikiranmu yang tidak bisa kulihat... Majulah dan temukan takdirmu."
             </p>
-            <button class="btn-gold" onclick="startExperience()">Enter The Hall</button>
+            <button class="magic-btn" onclick="startQuiz()">Masuk Ke Aula Besar</button>
         </div>
 
         <div id="scr-quiz" class="hidden">
-            <div id="step-count" style="color: var(--gold); font-size: 12px; letter-spacing: 4px; margin-bottom: 20px;"></div>
-            <h2 id="question-txt" style="font-family: 'Playfair Display'; font-style: italic; text-transform: none; letter-spacing: 0;"></h2>
-            <div id="options-grid" class="option-box"></div>
+            <div id="progress" style="color: var(--gold); font-size: 10px; letter-spacing: 5px; margin-bottom: 15px;"></div>
+            <h2 id="question-text" style="font-style: italic; font-family: 'Playfair Display'; text-transform: none;"></h2>
+            <div id="options-grid" class="quiz-grid"></div>
         </div>
 
         <div id="scr-result" class="hidden">
-            <p style="letter-spacing: 8px; color: var(--gold); font-size: 0.8rem;">DISCOVERED DESTINY</p>
+            <p style="letter-spacing: 5px; color: var(--gold); font-size: 0.7rem;">TAKDIRMU TELAH DITETAPKAN</p>
             <h1 id="res-house" class="house-name"></h1>
-            <img id="res-crest" src="" class="house-crest">
-            <p id="res-desc" style="line-height: 2; color: #ccc; font-style: italic; font-size: 1.1rem;"></p>
-            <div style="margin-top: 50px; border-top: 1px solid rgba(195,157,94,0.2); padding-top: 20px;">
-                <p style="font-size: 9px; letter-spacing: 3px; color: var(--gold);">PERMANENT RECORD | NO RE-SORTING ALLOWED</p>
+            <img id="res-crest" src="" class="crest-reveal">
+            <p id="res-desc" style="line-height: 1.8; color: #ccc; font-style: italic; font-size: 1rem; padding: 0 10px;"></p>
+            <div style="margin-top: 40px; border-top: 1px solid rgba(195,157,94,0.2); padding-top: 20px;">
+                <p style="font-size: 9px; letter-spacing: 2px; color: var(--gold); opacity: 0.6;">CATATAN PERMANEN | TIDAK DAPAT DIULANG</p>
             </div>
         </div>
     </div>
 
     <script>
         const questions = [
-            { q: "You find yourself in a dark forest. What light do you follow?", 
-              o: [{t: "The flickering torch of a traveler", h: "Gryffindor"}, {t: "the silver moonlight on a lake", h: "Ravenclaw"}, {t: "A mysterious green glow deep in the trees", h: "Slytherin"}, {t: "A warm lantern from a nearby cottage", h: "Hufflepuff"}] },
-            { q: "Which potion would you choose to brew?", 
-              o: [{t: "Liquid Luck (Felix Felicis)", h: "Gryffindor"}, {t: "Amortentia (Love)", h: "Hufflepuff"}, {t: "Polyjuice (Transformation)", h: "Slytherin"}, {t: "Wit-Sharpening Potion", h: "Ravenclaw"}] },
-            { q: "An enemy has insulted someone you love. You...", 
-              o: [{t: "Challenge them to a duel immediately", h: "Gryffindor"}, {t: "Plan a subtle, long-term revenge", h: "Slytherin"}, {t: "Debate them with logic and wit", h: "Ravenclaw"}, {t: "Stand by your loved one's side and ignore the fool", h: "Hufflepuff"}] },
-            { q: "What do you see in the Mirror of Erised?", 
-              o: [{t: "Myself standing atop a mountain of victory", h: "Slytherin"}, {t: "A library containing all the world's secrets", h: "Ravenclaw"}, {t: "A table full of family and friends", h: "Hufflepuff"}, {t: "Myself performing a feat of incredible bravery", h: "Gryffindor"}] },
-            { q: "Which magical beast would you most like to study?", 
-              o: [{t: "Phoenix", h: "Gryffindor"}, {t: "Hippogriff", h: "Ravenclaw"}, {t: "Dragon", h: "Slytherin"}, {t: "Niffler", h: "Hufflepuff"}] }
+            { q: "Di sebuah jalanan sunyi, benda apa yang paling menarik perhatianmu?", 
+              o: [{t: "Pedang perak yang bersinar", h: "Gryffindor"}, {t: "Buku kuno berdebu", h: "Ravenclaw"}, {t: "Cincin zamrud yang misterius", h: "Slytherin"}, {t: "Tanaman obat yang harum", h: "Hufflepuff"}] },
+            { q: "Apa yang paling kamu takuti jika orang lain menilaimu?", 
+              o: [{t: "Dianggap sebagai pengecut", h: "Gryffindor"}, {t: "Dianggap tidak kompeten", h: "Slytherin"}, {t: "Dianggap bodoh", h: "Ravenclaw"}, {t: "Dianggap egois", h: "Hufflepuff"}] },
+            { q: "Jika kamu bisa menciptakan ramuan, ramuan itu akan memberimu...", 
+              o: [{t: "Keberanian tanpa batas", h: "Gryffindor"}, {t: "Kebijaksanaan abadi", h: "Ravenclaw"}, {t: "Kekuasaan yang besar", h: "Slytherin"}, {t: "Kebahagiaan yang tulus", h: "Hufflepuff"}] },
+            { q: "Bintang mana yang akan kamu ikuti di malam hari?", 
+              o: [{t: "Bintang yang paling terang", h: "Gryffindor"}, {t: "Bintang yang paling jauh", h: "Ravenclaw"}, {t: "Bintang yang tampak paling tajam", h: "Slytherin"}, {t: "Bintang yang cahayanya paling tenang", h: "Hufflepuff"}] },
+            { q: "Kualitas apa yang paling ingin kamu wariskan pada dunia?", 
+              o: [{t: "Kepahlawanan", h: "Gryffindor"}, {t: "Inovasi & Pengetahuan", h: "Ravenclaw"}, {t: "Kejayaan", h: "Slytherin"}, {t: "Kedamaian & Keadilan", h: "Hufflepuff"}] }
         ];
 
         const houseData = {
-            Gryffindor: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/b/b1/Gryffindor_ClearBG.png", desc: "Where dwell the brave at heart, their daring, nerve, and chivalry set Gryffindors apart.", color: "#740001" },
-            Slytherin: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/0/00/Slytherin_ClearBG.png", desc: "Those cunning folks use any means to achieve their ends. Ambition and leadership are your hallmarks.", color: "#1a472a" },
-            Ravenclaw: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/4/4e/Ravenclaw_ClearBG.png", desc: "Where those of wit and learning will always find their kind. Wisdom and creativity flow through you.", color: "#0e1a40" },
-            Hufflepuff: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/0/06/Hufflepuff_ClearBG.png", desc: "Where they are just and loyal, patient Hufflepuffs are true and unafraid of toil.", color: "#ecb939" }
+            Gryffindor: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/b/b1/Gryffindor_ClearBG.png", desc: "Tempat bagi mereka yang berani dan ksatria. Keberanian dan tekadmu akan menuntunmu ke jalan pahlawan.", color: "#ae0001" },
+            Slytherin: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/0/00/Slytherin_ClearBG.png", desc: "Cerdik dan ambisius. Kamu tidak akan berhenti sebelum mencapai puncak kejayaan yang kamu impikan.", color: "#2a623d" },
+            Ravenclaw: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/4/4e/Ravenclaw_ClearBG.png", desc: "Kebijaksanaan dan kreativitas mengalir dalam darahmu. Kamu adalah pencari kebenaran sejati.", color: "#222f5b" },
+            Hufflepuff: { img: "https://vignette.wikia.nocookie.net/harrypotter/images/0/06/Hufflepuff_ClearBG.png", desc: "Setia, jujur, dan pekerja keras. Kamu menghargai persahabatan di atas segalanya.", color: "#ecb939" }
         };
 
         let scores = { Gryffindor: 0, Hufflepuff: 0, Ravenclaw: 0, Slytherin: 0 };
         let currentIdx = 0;
 
-        // ETERNAL CHECK: Jika sudah pernah, langsung tampilkan hasil
+        // CEK APAKAH SUDAH PERNAH KUIS
         window.onload = () => {
-            const saved = localStorage.getItem('eternalHouse');
-            if (saved) { showFinalResult(saved); }
+            const saved = localStorage.getItem('eternal_house_final');
+            if (saved) { renderFinal(saved); }
         };
 
-        function startExperience() {
+        function startQuiz() {
             document.getElementById('scr-welcome').classList.add('hidden');
             document.getElementById('scr-quiz').classList.remove('hidden');
             loadQ();
@@ -223,40 +195,40 @@
 
         function loadQ() {
             const q = questions[currentIdx];
-            document.getElementById('step-count').innerText = `REVELATION ${currentIdx + 1} OF 5`;
-            document.getElementById('question-txt').innerText = `"${q.q}"`;
+            document.getElementById('progress').innerText = `LANGKAH ${currentIdx + 1} DARI 5`;
+            document.getElementById('question-text').innerText = `"${q.q}"`;
             const grid = document.getElementById('options-grid');
             grid.innerHTML = '';
 
             q.o.forEach(opt => {
-                const item = document.createElement('div');
-                item.className = 'option-item';
-                item.innerText = opt.t;
-                item.onclick = () => {
+                const btn = document.createElement('div');
+                btn.className = 'option';
+                btn.innerText = opt.t;
+                btn.onclick = () => {
                     scores[opt.h]++;
                     currentIdx++;
                     if(currentIdx < questions.length) loadQ();
                     else finalize();
                 };
-                grid.appendChild(item);
+                grid.appendChild(btn);
             });
         }
 
         function finalize() {
             const winner = Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b);
-            localStorage.setItem('eternalHouse', winner);
-            showFinalResult(winner);
+            localStorage.setItem('eternal_house_final', winner);
+            renderFinal(winner);
         }
 
-        function showFinalResult(house) {
+        function renderFinal(house) {
             document.getElementById('scr-welcome').classList.add('hidden');
             document.getElementById('scr-quiz').classList.add('hidden');
             const res = document.getElementById('scr-result');
             res.classList.remove('hidden');
-            res.classList.add('fade-in');
 
             const data = houseData[house];
             document.getElementById('res-house').innerText = house.toUpperCase();
+            document.getElementById('res-house').style.color = data.color;
             document.getElementById('res-crest').src = data.img;
             document.getElementById('res-desc').innerText = data.desc;
         }
