@@ -1,10 +1,11 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: url('https://i.ibb.co/V3YN5Yd/hogwarts-bg.jpg') no-repeat center center fixed;
+    background: #1a1a1a url('https://i.ibb.co/V3YN5Yd/hogwarts-bg.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #fff;
     text-align: center;
+    min-height: 100vh;
 }
 
 .start-screen, .quiz-screen, .result-screen {
@@ -13,25 +14,26 @@ body {
 
 .hat {
     width: 250px;
+    margin-bottom: 20px;
     animation: wiggle 2s infinite;
 }
 
 button {
-    display: block; /* Agar tombol tersusun ke bawah */
-    margin: 20px auto; 
+    margin: 10px auto;
     padding: 15px 30px;
-    font-size: 20px;
+    font-size: 18px;
     background: #D3A625;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s;
     color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: block;
 }
 
 button:hover {
     background: #740001;
-    transform: scale(1.1); /* Tambahan agar lebih interaktif */
+    transform: scale(1.05);
 }
 
 .house-icon {
