@@ -2,231 +2,278 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>The Sorting Hat Experience</title>
+<title>The Sorting Hat Ceremony</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- MAGIC FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap');
+*{box-sizing:border-box}
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: 'Cinzel', serif;
+body{
+  margin:0;
+  min-height:100vh;
   background:
-    linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)),
-    url('https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?auto=format&fit=crop&w=1600&q=80');
-  background-size: cover;
-  background-position: center;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    radial-gradient(circle at top,rgba(255,215,0,.15),transparent 60%),
+    linear-gradient(rgba(0,0,0,.8),rgba(0,0,0,.9)),
+    url('https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1600&q=80');
+  background-size:cover;
+  background-position:center;
+  font-family:'Cinzel',serif;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.container {
-  width: 90%;
-  max-width: 700px;
-  background: rgba(0,0,0,0.55);
-  border: 2px solid rgba(255,215,0,0.4);
-  border-radius: 25px;
-  padding: 35px;
-  box-shadow: 0 0 40px rgba(255,215,0,0.25);
-  animation: fadeIn 1.5s ease;
+.hidden{display:none}
+
+/* ===== CONTAINER QUIZ ===== */
+.box{
+  width:90%;
+  max-width:720px;
+  padding:40px;
+  background:rgba(0,0,0,.6);
+  border-radius:30px;
+  position:relative;
+  box-shadow:0 0 50px rgba(255,215,0,.25);
+  animation:fadeUp 1.5s ease;
 }
 
-h1, h2 {
-  margin-bottom: 20px;
-  text-align: center;
+/* GOLD CORNERS */
+.box:before,.box:after{
+  content:"";
+  position:absolute;
+  width:60px;
+  height:60px;
+  border:3px solid gold;
+}
+.box:before{
+  top:-10px;left:-10px;
+  border-right:none;border-bottom:none;
+}
+.box:after{
+  bottom:-10px;right:-10px;
+  border-left:none;border-top:none;
 }
 
-p {
-  line-height: 1.7;
+h1,h2{text-align:center;font-family:'Uncial Antiqua',cursive}
+p{text-align:center;line-height:1.8}
+
+button{
+  width:100%;
+  margin-top:14px;
+  padding:15px;
+  font-family:'Cinzel',serif;
+  font-size:16px;
+  border-radius:20px;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(135deg,#bfa23a,#ffd700);
+  transition:.35s;
+}
+button:hover{
+  transform:scale(1.06);
+  box-shadow:0 0 20px gold;
 }
 
-button {
-  width: 100%;
-  padding: 15px;
-  margin-top: 12px;
-  background: linear-gradient(135deg,#cfa42d,#ffd700);
-  border: none;
-  border-radius: 18px;
-  font-size: 16px;
-  font-family: 'Cinzel', serif;
-  cursor: pointer;
-  transition: all 0.3s ease;
+/* ===== START ===== */
+.hat{
+  width:180px;
+  display:block;
+  margin:20px auto;
+  animation:float 3s ease-in-out infinite;
 }
 
-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px gold;
+/* ===== RESULT ===== */
+.result{
+  text-align:center;
+  animation:fadeUp 2s ease;
+}
+.house-img{
+  width:220px;
+  margin:20px auto;
+  animation:glow 2.5s infinite alternate;
+}
+.house-name{
+  font-size:38px;
+  font-family:'Uncial Antiqua',cursive;
+  margin:10px 0;
 }
 
-.hidden {
-  display: none;
+.gryffindor{color:#d62828}
+.hufflepuff{color:#fcbf49}
+.ravenclaw{color:#4ea8de}
+.slytherin{color:#2a9d8f}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(40px)}
+  to{opacity:1;transform:none}
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-15px)}
+}
+@keyframes glow{
+  from{filter:drop-shadow(0 0 10px gold)}
+  to{filter:drop-shadow(0 0 30px gold)}
+}
+.badge-area{
+  margin-top:25px;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+.badge-card{
+  background:rgba(0,0,0,.55);
+  border:1px solid gold;
+  border-radius:18px;
+  padding:15px 18px;
+  width:160px;
+  box-shadow:0 0 20px rgba(255,215,0,.25);
+  animation:fadeUp 1.5s ease;
 }
 
-.house {
-  font-size: 32px;
-  margin-top: 15px;
+.badge-card img{
+  width:60px;
+  margin-bottom:8px;
+  filter:drop-shadow(0 0 10px gold);
 }
 
-.gryffindor { color: #d62828; }
-.hufflepuff { color: #fcbf49; }
-.ravenclaw  { color: #4ea8de; }
-.slytherin  { color: #2a9d8f; }
-
-.badge {
-  margin-top: 15px;
-  font-size: 18px;
-  letter-spacing: 1px;
+.badge-title{
+  font-family:'Uncial Antiqua',cursive;
+  font-size:15px;
 }
+
+.badge-desc{
+  font-size:13px;
+  opacity:.9;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="container" id="start">
-  <h1>🧙‍♂️ The Sorting Hat</h1>
+<!-- START -->
+<div class="box" id="start">
+  <h1>The Sorting Hat</h1>
+  <img class="hat" src="https://i.ibb.co/5v6mV9m/sorting-hat.png">
   <p>
-    The hat will look deep into your mind and soul.<br>
-    Answer honestly. You will only be sorted once.
+    The hat will peer into your mind and soul.<br>
+    You shall be sorted only once.
   </p>
-  <button onclick="startQuiz()">Begin the Sorting</button>
+  <button onclick="start()">Begin the Ceremony</button>
 </div>
 
-<div class="container hidden" id="quiz"></div>
+<!-- QUIZ -->
+<div class="box hidden" id="quiz"></div>
 
-<div class="container hidden" id="result"></div>
+<!-- RESULT (NO BOX) -->
+<div class="hidden" id="result"></div>
 
 <script>
-let current = 0;
-let locked = false;
+let i=0,lock=false;
+const score={Gryffindor:0,Hufflepuff:0,Ravenclaw:0,Slytherin:0};
 
-const score = {
-  Gryffindor: 0,
-  Hufflepuff: 0,
-  Ravenclaw: 0,
-  Slytherin: 0
-};
-
-const questions = [
-  {
-    q: "When facing a serious problem, you choose to…",
-    a: [
-      ["Face it head-on", "Gryffindor"],
-      ["Stay calm and support others", "Hufflepuff"],
-      ["Analyze every possibility", "Ravenclaw"],
-      ["Turn it into an advantage", "Slytherin"]
-    ]
-  },
-  {
-    q: "What do you value the most?",
-    a: [
-      ["Courage", "Gryffindor"],
-      ["Loyalty", "Hufflepuff"],
-      ["Knowledge", "Ravenclaw"],
-      ["Power", "Slytherin"]
-    ]
-  },
-  {
-    q: "In a group, you are usually the one who…",
-    a: [
-      ["Leads bravely", "Gryffindor"],
-      ["Keeps everyone together", "Hufflepuff"],
-      ["Plans everything", "Ravenclaw"],
-      ["Controls the direction", "Slytherin"]
-    ]
-  },
-  {
-    q: "If rules block your goal, you will…",
-    a: [
-      ["Break them if needed", "Gryffindor"],
-      ["Follow them patiently", "Hufflepuff"],
-      ["Find logical loopholes", "Ravenclaw"],
-      ["Manipulate the system", "Slytherin"]
-    ]
-  },
-  {
-    q: "You want to be remembered as…",
-    a: [
-      ["A hero", "Gryffindor"],
-      ["A kind soul", "Hufflepuff"],
-      ["A brilliant mind", "Ravenclaw"],
-      ["A powerful legend", "Slytherin"]
-    ]
-  }
+const q=[
+["When facing danger, you…",["Stand your ground","Gryffindor"],["Protect others","Hufflepuff"],["Think carefully","Ravenclaw"],["Turn it to gain","Slytherin"]],
+["What matters most to you?",["Honor","Gryffindor"],["Loyalty","Hufflepuff"],["Knowledge","Ravenclaw"],["Ambition","Slytherin"]],
+["People see you as…",["Fearless","Gryffindor"],["Warm","Hufflepuff"],["Insightful","Ravenclaw"],["Influential","Slytherin"]],
+["Rules are…",["Optional","Gryffindor"],["Important","Hufflepuff"],["Logical","Ravenclaw"],["Tools","Slytherin"]],
+["You wish to be remembered as…",["A hero","Gryffindor"],["A good soul","Hufflepuff"],["A great mind","Ravenclaw"],["A legend","Slytherin"]]
 ];
 
-function startQuiz() {
-  document.getElementById("start").classList.add("hidden");
-  document.getElementById("quiz").classList.remove("hidden");
-  showQuestion();
+const houseImg={
+Gryffindor:"https://i.ibb.co/z5V0fK6/gryffindor.png",
+Hufflepuff:"https://i.ibb.co/7r0Q6cK/hufflepuff.png",
+Ravenclaw:"https://i.ibb.co/WKQ1sBc/ravenclaw.png",
+Slytherin:"https://i.ibb.co/jTgS5gN/slytherin.png"
+};
+
+const desc={
+Gryffindor:"Bravery burns within you. You act when others hesitate.",
+Hufflepuff:"Your heart is your strength. Loyalty defines you.",
+Ravenclaw:"Wisdom guides every step you take.",
+Slytherin:"Ambition fuels you. You shape fate itself."
+};
+const badges={
+Gryffindor:[
+  ["🦁 Courage","https://i.ibb.co/2Z8Z3nX/fire.png","Bravery & bold spirit"],
+  ["🔥 Fire","https://i.ibb.co/2Z8Z3nX/fire.png","Action & passion"]
+],
+Hufflepuff:[
+  ["🦡 Loyalty","https://i.ibb.co/8P1X9f8/earth.png","Trust & patience"],
+  ["🌱 Earth","https://i.ibb.co/8P1X9f8/earth.png","Stability & care"]
+],
+Ravenclaw:[
+  ["🦅 Wisdom","https://i.ibb.co/6b4nTfY/air.png","Knowledge & logic"],
+  ["🌬 Air","https://i.ibb.co/6b4nTfY/air.png","Thought & clarity"]
+],
+Slytherin:[
+  ["🐍 Ambition","https://i.ibb.co/vqkz2HC/water.png","Power & desire"],
+  ["💧 Water","https://i.ibb.co/vqkz2HC/water.png","Adapt & control"]
+]
+};
+
+function start(){
+document.getElementById("start").classList.add("hidden");
+document.getElementById("quiz").classList.remove("hidden");
+show();
 }
 
-function showQuestion() {
-  const q = questions[current];
-  const quiz = document.getElementById("quiz");
-  quiz.innerHTML = `<h2>${q.q}</h2>`;
-  q.a.forEach(opt => {
-    const btn = document.createElement("button");
-    btn.textContent = opt[0];
-    btn.onclick = () => answer(opt[1]);
-    quiz.appendChild(btn);
-  });
+function show(){
+const box=document.getElementById("quiz");
+box.innerHTML=`<h2>${q[i][0]}</h2>`;
+q[i].slice(1).forEach(a=>{
+const b=document.createElement("button");
+b.textContent=a[0];
+b.onclick=()=>pick(a[1]);
+box.appendChild(b);
+});
 }
 
-function answer(house) {
-  if (locked) return;
-  locked = true;
-  score[house]++;
-  current++;
-  setTimeout(() => {
-    locked = false;
-    if (current < questions.length) {
-      showQuestion();
-    } else {
-      showResult();
-    }
-  }, 500);
+function pick(h){
+if(lock)return;lock=true;
+score[h]++;i++;
+setTimeout(()=>{
+lock=false;
+i<q.length?show():result();
+},400);
 }
 
-function showResult() {
-  document.getElementById("quiz").classList.add("hidden");
-  const result = document.getElementById("result");
-  result.classList.remove("hidden");
+function result(){
+document.getElementById("quiz").remove();
+const h=Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
+const r=document.getElementById("result");
+r.classList.remove("hidden");
 
-  const house = Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
+let badgeHTML="";
+badges[h].forEach(b=>{
+badgeHTML+=`
+  <div class="badge-card">
+    <img src="${b[1]}">
+    <div class="badge-title">${b[0]}</div>
+    <div class="badge-desc">${b[2]}</div>
+  </div>`;
+});
 
-  const desc = {
-    Gryffindor: "Brave, bold, and driven by honor. You stand when others fall.",
-    Hufflepuff: "Loyal, patient, and kind. Your strength is your heart.",
-    Ravenclaw: "Wise, thoughtful, and curious. Knowledge is your power.",
-    Slytherin: "Ambitious, strategic, and determined. You shape your destiny."
-  };
+r.innerHTML=`
+<div class="result">
+  <h1>You belong to</h1>
+  <div class="house-name ${h.toLowerCase()}">${h}</div>
+  <img class="house-img" src="${houseImg[h]}">
+  <p>${desc[h]}</p>
 
-  const badge = {
-    Gryffindor: "🦁 Courage • Fire • Honor",
-    Hufflepuff: "🦡 Loyalty • Earth • Dedication",
-    Ravenclaw: "🦅 Wisdom • Air • Intellect",
-    Slytherin: "🐍 Ambition • Water • Power"
-  };
+  <div class="badge-area">
+    ${badgeHTML}
+  </div>
 
-  result.innerHTML = `
-    <h1>You belong to</h1>
-    <div class="house ${house.toLowerCase()}">${house}</div>
-    <p>${desc[house]}</p>
-    <div class="badge">${badge[house]}</div>
-    <p><i>The Sorting Hat has spoken. This choice cannot be undone.</i></p>
-  `;
+  <p><i>The Sorting Hat has spoken.</i></p>
+</div>`;
 }
 </script>
 
