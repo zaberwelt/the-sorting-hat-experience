@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>The Sorting Hat - Pure Hogwarts Edition</title>
+<title>The Sorting Hat - Hogwarts Edition</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -78,7 +78,7 @@ h1 {
 /* ===== QUIZ BOX ===== */
 .quiz-box {
     position: relative;
-    padding: 25px;
+    padding: 30px 25px;
     background: rgba(15, 10, 5, 0.95);
     border-radius: 12px;
     backdrop-filter: blur(10px);
@@ -88,8 +88,8 @@ h1 {
 }
 
 .question {
-    font-size: 1.05rem;
-    margin-bottom: 20px;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
     color: #f0e6d2;
     line-height: 1.4;
 }
@@ -97,14 +97,14 @@ h1 {
 .options button {
     display: block;
     width: 100%;
-    margin: 8px 0;
-    padding: 12px;
+    margin: 10px 0;
+    padding: 14px;
     border-radius: 6px;
     border: 1px solid rgba(212, 175, 55, 0.2);
     background: rgba(255, 255, 255, 0.03);
     color: #eaeaff;
     font-family: 'Poppins', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     cursor: pointer;
     transition: all .3s ease;
 }
@@ -112,39 +112,37 @@ h1 {
 .options button:hover {
     background: rgba(212, 175, 55, 0.15);
     border-color: #d4af37;
+    transform: translateY(-2px);
 }
 
 /* ===== RESULT SECTIONS ===== */
-.house-logo {
-    width: 160px; 
-    height: auto;
-    margin: 15px auto;
-    display: block;
-    animation: fadeIn 1.5s ease;
-}
-
 .house-name {
     font-family: 'Cinzel', serif;
-    font-size: 2.2rem;
-    letter-spacing: 3px;
-    margin: 5px 0;
+    font-size: 2.4rem;
+    letter-spacing: 4px;
+    margin: 10px 0;
+    text-shadow: 0 0 15px rgba(0,0,0,0.5);
+    animation: fadeIn 1s ease;
 }
 
 .desc {
-    font-size: 0.95rem;
-    line-height: 1.5;
+    font-size: 1rem;
+    line-height: 1.6;
     color: #d1c4a9;
-    margin: 10px auto 15px auto;
+    margin: 20px auto;
     max-width: 500px;
+    animation: fadeIn 1.2s ease;
 }
 
 .attr {
     display: inline-block;
-    padding: 6px 15px;
+    padding: 10px 20px;
     background: rgba(0,0,0,0.4);
     border-radius: 4px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     border: 1px solid rgba(212, 175, 55, 0.2);
+    margin-bottom: 10px;
+    animation: fadeIn 1.5s ease;
 }
 
 .btn-selesai {
@@ -155,11 +153,14 @@ h1 {
     cursor: pointer;
     text-decoration: underline;
     font-size: 0.9rem;
+    opacity: 0.8;
 }
 
+.btn-selesai:hover { opacity: 1; }
+
 @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.8); }
-    to { opacity: 1; transform: scale(1); }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
@@ -172,33 +173,34 @@ h1 {
 <div class="container" id="app">
     <h1>The Sorting Hat</h1>
 
-    <img src="https://static.wikia.nocookie.net/harrypotter/images/6/62/Sorting_Hat.png" alt="Sorting Hat" class="hat-img">
+    <img src="https://www.pngkit.com/png/full/22-225272_sorting-hat-png-harry-potter-sorting-hat-transparent.png" alt="Sorting Hat" class="hat-img">
 
     <div class="quiz-box" id="quiz"></div>
 </div>
 
 <script>
+// Cek status kuis
 if (localStorage.getItem("hogwarts_done")) {
     document.getElementById("quiz").innerHTML =
-        "<p style='padding:40px 10px;'>Topi Seleksi telah menetapkan takdirmu.<br><b style='color:#d4af37;'>Selamat belajar di Hogwarts!</b></p>";
+        "<p style='padding:40px 10px;'>Topi Seleksi telah menetapkan takdirmu.<br><br><b style='color:#d4af37; font-size:1.2rem;'>Selamat belajar di Hogwarts!</b></p>";
 } else {
 
 const questions = [
  {
   q:"Manakah kualitas yang paling kamu hargai dalam dirimu?",
   a:[
-    {t:"Keberanian dan keberanian tinggi",h:"Gryffindor"},
-    {t:"Kecerdikan dan ambisi besar",h:"Slytherin"},
-    {t:"Kecerdasan dan haus akan ilmu",h:"Ravenclaw"},
-    {t:"Kesetiaan dan kerja keras",h:"Hufflepuff"}
+    {t:"Keberanian dan Jiwa Ksatria",h:"Gryffindor"},
+    {t:"Kecerdikan dan Ambisi Besar",h:"Slytherin"},
+    {t:"Kecerdasan dan Haus akan Ilmu",h:"Ravenclaw"},
+    {t:"Kesetiaan dan Kerja Keras",h:"Hufflepuff"}
   ]
  },
  {
   q:"Apa yang akan kamu lakukan jika melihat teman dalam kesulitan?",
   a:[
     {t:"Langsung menolong tanpa berpikir panjang",h:"Gryffindor"},
-    {t:"Mencari cara paling efisien untuk membantu mereka",h:"Slytherin"},
-    {t:"Menganalisis situasi untuk memberikan solusi terbaik",h:"Ravenclaw"},
+    {t:"Mencari cara paling efisien untuk membantu",h:"Slytherin"},
+    {t:"Menganalisis situasi untuk solusi terbaik",h:"Ravenclaw"},
     {t:"Tetap mendampingi mereka apa pun yang terjadi",h:"Hufflepuff"}
   ]
  },
@@ -268,9 +270,9 @@ function result() {
  <div class="result">
    <div class="house-name" style="color:${data[house].color};">${house}</div>
    <div class="desc">${data[house].desc}</div>
-   <div class="attr" style="border-color:${data[house].color}55">${data[house].attr}</div>
+   <div class="attr" style="border-color:${data[house].color}88">${data[house].attr}</div>
    <br>
-   <button onclick="location.reload()" class="btn-selesai">Selesai</button>
+   <button onclick="localStorage.removeItem('hogwarts_done'); location.reload();" class="btn-selesai">Ulangi Seleksi</button>
  </div>`;
 }
 
