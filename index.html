@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Sorting Hat Ceremony - Hogwarts Edition</title>
+<title>The Sorting Hat - Pure Hogwarts Edition</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -22,7 +22,6 @@ body {
     justify-content: center;
 }
 
-/* ===== STAR BACKGROUND ===== */
 .stars-container {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -43,7 +42,6 @@ body {
     to { transform: translate(-50%, -50%); }
 }
 
-/* ===== CONTAINER ===== */
 .container {
     max-width: 820px;
     width: 100%;
@@ -62,9 +60,9 @@ h1 {
     margin: 10px 0;
 }
 
-/* ===== REALISTIC HAT IMAGE (Sesuai Permintaan) ===== */
+/* ===== REALISTIC HAT IMAGE ===== */
 .hat-img {
-    width: 200px; 
+    width: 220px; 
     height: auto;
     margin: 0 auto 15px auto;
     display: block;
@@ -74,7 +72,7 @@ h1 {
 
 @keyframes floatHat {
     0%, 100% { transform: translateY(0) rotate(-1deg); }
-    50% { transform: translateY(-10px) rotate(1deg); }
+    50% { transform: translateY(-12px) rotate(1deg); }
 }
 
 /* ===== QUIZ BOX ===== */
@@ -116,12 +114,13 @@ h1 {
     border-color: #d4af37;
 }
 
-/* ===== RESULT ===== */
+/* ===== RESULT SECTIONS ===== */
 .house-logo {
-    width: 140px; 
+    width: 160px; 
     height: auto;
     margin: 15px auto;
     display: block;
+    animation: fadeIn 1.5s ease;
 }
 
 .house-name {
@@ -132,13 +131,11 @@ h1 {
 }
 
 .desc {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     line-height: 1.5;
     color: #d1c4a9;
-    margin-bottom: 15px;
+    margin: 10px auto 15px auto;
     max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .attr {
@@ -151,14 +148,18 @@ h1 {
 }
 
 .btn-selesai {
-    margin-top: 20px;
+    margin-top: 25px;
     background: none;
     border: none;
     color: #d4af37;
     cursor: pointer;
     text-decoration: underline;
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
 }
 </style>
 </head>
@@ -171,7 +172,7 @@ h1 {
 <div class="container" id="app">
     <h1>The Sorting Hat</h1>
 
-    <img src="https://www.pngkit.com/png/full/22-225272_sorting-hat-png-harry-potter-sorting-hat-transparent.png" alt="Sorting Hat" class="hat-img">
+    <img src="https://www.pngarts.com/files/3/Harry-Potter-Sorting-Hat-PNG-Image-Background.png" alt="Sorting Hat" class="hat-img">
 
     <div class="quiz-box" id="quiz"></div>
 </div>
@@ -179,26 +180,35 @@ h1 {
 <script>
 if (localStorage.getItem("hogwarts_done")) {
     document.getElementById("quiz").innerHTML =
-        "<p style='padding:20px;'>Topi Seleksi telah bicara.<br><b style='color:#d4af37;'>Keputusan Hogwarts sudah bulat.</b></p>";
+        "<p style='padding:40px 10px;'>Topi Seleksi telah menetapkan takdirmu.<br><b style='color:#d4af37;'>Selamat belajar di Hogwarts!</b></p>";
 } else {
 
 const questions = [
  {
-  q:"Manakah kualitas yang paling kamu hargai?",
+  q:"Manakah kualitas yang paling kamu hargai dalam dirimu?",
   a:[
-    {t:"Keberanian dan Jiwa Ksatria",h:"Gryffindor"},
-    {t:"Kecerdikan dan Ambisi",h:"Slytherin"},
-    {t:"Kecerdasan dan Pengetahuan",h:"Ravenclaw"},
-    {t:"Kesetiaan dan Kerja Keras",h:"Hufflepuff"}
+    {t:"Keberanian dan keberanian tinggi",h:"Gryffindor"},
+    {t:"Kecerdikan dan ambisi besar",h:"Slytherin"},
+    {t:"Kecerdasan dan haus akan ilmu",h:"Ravenclaw"},
+    {t:"Kesetiaan dan kerja keras",h:"Hufflepuff"}
   ]
  },
  {
-  q:"Bagaimana caramu menghadapi rintangan?",
+  q:"Apa yang akan kamu lakukan jika melihat teman dalam kesulitan?",
   a:[
-    {t:"Menerjangnya dengan berani",h:"Gryffindor"},
-    {t:"Mencari cara paling strategis untuk menang",h:"Slytherin"},
-    {t:"Menganalisis solusi terbaik",h:"Ravenclaw"},
-    {t:"Menyelesaikannya dengan sabar dan telaten",h:"Hufflepuff"}
+    {t:"Langsung menolong tanpa berpikir panjang",h:"Gryffindor"},
+    {t:"Mencari cara paling efisien untuk membantu mereka",h:"Slytherin"},
+    {t:"Menganalisis situasi untuk memberikan solusi terbaik",h:"Ravenclaw"},
+    {t:"Tetap mendampingi mereka apa pun yang terjadi",h:"Hufflepuff"}
+  ]
+ },
+ {
+  q:"Pilih artefak yang ingin kamu miliki:",
+  a:[
+    {t:"Pedang berlapis perak",h:"Gryffindor"},
+    {t:"Tongkat sihir terkuat",h:"Slytherin"},
+    {t:"Mahkota kebijaksanaan",h:"Ravenclaw"},
+    {t:"Piala emas persahabatan",h:"Hufflepuff"}
   ]
  }
 ];
@@ -232,28 +242,28 @@ function result() {
 
  const data = {
   Gryffindor:{
-    desc:"Tempat bagi mereka yang berani. Hati ksatria ada di dalam dirimu.",
+    desc:"Rumah bagi mereka yang berani, ksatria, dan tak gentar menghadapi bahaya.",
     attr:"Warna: Merah & Emas · Simbol: Singa",
     color:"#ae0001",
-    logo:"https://static.wikia.nocookie.net/harrypotter/images/b/b1/Gryffindor_Clear_Crest.png"
+    logo:"https://www.pngplay.com/wp-content/uploads/12/Gryffindor-Logo-Transparent-PNG.png"
   },
   Slytherin:{
-    desc:"Tempat bagi mereka yang cerdik. Kamu akan meraih keagungan.",
+    desc:"Rumah bagi mereka yang cerdik, ambisius, dan pemimpin yang haus kekuasaan.",
     attr:"Warna: Hijau & Perak · Simbol: Ular",
     color:"#2a623d",
-    logo:"https://static.wikia.nocookie.net/harrypotter/images/0/00/Slytherin_Clear_Crest.png"
+    logo:"https://www.pngplay.com/wp-content/uploads/12/Slytherin-Logo-Transparent-PNG.png"
   },
   Ravenclaw:{
-    desc:"Tempat bagi mereka yang cerdas. Pengetahuan adalah hartamu.",
+    desc:"Rumah bagi mereka yang cerdas, kreatif, dan memiliki wawasan yang tajam.",
     attr:"Warna: Biru & Perunggu · Simbol: Elang",
     color:"#222f5b",
-    logo:"https://static.wikia.nocookie.net/harrypotter/images/4/4e/Ravenclaw_Clear_Crest.png"
+    logo:"https://www.pngplay.com/wp-content/uploads/12/Ravenclaw-Logo-Transparent-PNG.png"
   },
   Hufflepuff:{
-    desc:"Tempat bagi mereka yang setia. Kerja keras adalah kekuatanmu.",
+    desc:"Rumah bagi mereka yang setia, jujur, sabar, dan tidak takut bekerja keras.",
     attr:"Warna: Kuning & Hitam · Simbol: Luwak",
     color:"#ecb939",
-    logo:"https://static.wikia.nocookie.net/harrypotter/images/0/06/Hufflepuff_Clear_Crest.png"
+    logo:"https://www.pngplay.com/wp-content/uploads/12/Hufflepuff-Logo-Transparent-PNG.png"
   }
  };
 
@@ -263,7 +273,7 @@ function result() {
    <div class="house-name" style="color:${data[house].color};">${house}</div>
    <img src="${data[house].logo}" class="house-logo" alt="Logo ${house}">
    <div class="desc">${data[house].desc}</div>
-   <div class="attr">${data[house].attr}</div>
+   <div class="attr" style="border-color:${data[house].color}55">${data[house].attr}</div>
    <br>
    <button onclick="location.reload()" class="btn-selesai">Selesai</button>
  </div>`;
