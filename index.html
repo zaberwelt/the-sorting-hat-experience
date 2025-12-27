@@ -1,352 +1,51 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Sorting Hat Ceremony - Premium Edition</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400&display=swap');
-
-* { box-sizing: border-box; }
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: 'Poppins', sans-serif;
-    color: #eaeaff;
-    background: #000;
-    background: radial-gradient(circle at top, #0a113a, #000);
-    overflow-x: hidden;
-    display: flex;
-    justify-content: center;
-}
-
-/* ===== STAR BACKGROUND ===== */
-.stars-container {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -2;
-    overflow: hidden;
-}
-
-.stars, .stars2 {
-    position: absolute;
-    width: 200%; height: 200%;
-    background-repeat: repeat;
-    background-image: radial-gradient(1px 1px at 20px 30px, #eee, rgba(0,0,0,0)),
-                      radial-gradient(1.5px 1.5px at 40px 70px, #fff, rgba(0,0,0,0)),
-                      radial-gradient(1px 1px at 50px 160px, #ddd, rgba(0,0,0,0));
-    background-size: 200px 200px;
-    animation: moveStars 100s linear infinite;
-}
-
-.stars2 {
-    background-size: 300px 300px;
-    animation-duration: 150s;
-    opacity: 0.5;
-}
-
-@keyframes moveStars {
-    from { transform: translate(0,0); }
-    to { transform: translate(-50%, -50%); }
-}
-
-/* ===== CONTAINER ===== */
-.container {
-    max-width: 820px;
-    width: 100%;
-    padding: 60px 20px;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-}
-
-h1 {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1.8rem, 5vw, 2.8rem);
-    letter-spacing: 4px;
-    color: #fff;
-    text-shadow: 0 0 20px rgba(122, 162, 255, 0.8);
-    margin-bottom: 0;
-}
-
-/* ===== HAT SVG ===== */
-.hat {
-    width: 180px;
-    margin: 20px auto;
-    filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
-    animation: floatHat 4s ease-in-out infinite;
-}
-
-@keyframes floatHat {
-    0%, 100% { transform: translateY(0) rotate(-2deg); }
-    50% { transform: translateY(-15px) rotate(2deg); }
-}
-
-/* ===== QUIZ BOX ===== */
-.quiz-box {
-    position: relative;
-    margin-top: 30px;
-    padding: 40px 25px;
-    background: rgba(5, 11, 42, 0.85);
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(159, 212, 255, 0.2);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    overflow: hidden;
-}
-
-/* Animated Corner Lights */
-.quiz-box::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    border-radius: 20px;
-    padding: 2px;
-    background: linear-gradient(90deg, transparent, #fff, #9fd4ff, transparent);
-    background-size: 200% 100%;
-    animation: glowMove 4s linear infinite;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
-}
-
-@keyframes glowMove {
-    0% { background-position: 100% 0%; }
-    100% { background-position: -100% 0%; }
-}
-
-.question {
-    font-size: 1.3rem;
-    margin-bottom: 30px;
-    font-weight: 300;
-    color: #fff;
-}
-
-.options button {
-    display: block;
-    width: 100%;
-    margin: 12px 0;
-    padding: 16px;
-    border-radius: 12px;
-    border: 1px solid rgba(74, 108, 255, 0.3);
-    background: rgba(255, 255, 255, 0.05);
-    color: #eaeaff;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.options button:hover {
-    background: rgba(80, 120, 255, 0.2);
-    border-color: #7aa2ff;
-    transform: scale(1.02);
-    box-shadow: 0 0 20px rgba(122, 162, 255, 0.4);
-}
-
-/* ===== RESULT ===== */
-.result {
-    animation: fadeIn 1.5s ease-out forwards;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-.house-img {
-    width: 220px;
-    margin: 20px auto;
-    animation: pulse 3s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { filter: drop-shadow(0 0 10px rgba(255,255,255,0.3)); }
-    50% { filter: drop-shadow(0 0 30px rgba(255,255,255,0.6)); }
-}
-
-.house-name {
-    font-family: 'Cinzel', serif;
-    font-size: 3rem;
-    letter-spacing: 6px;
-    margin: 10px 0;
-    text-transform: uppercase;
-}
-
-.desc {
-    max-width: 600px;
-    margin: 15px auto;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #bdc3e6;
-}
-
-.attr {
-    display: inline-block;
-    padding: 10px 20px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 50px;
-    margin-top: 20px;
-    border: 1px solid rgba(255,255,255,0.1);
-    color: #fff;
-    font-weight: 300;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hogwarts Sorting Hat Ceremony</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-<div class="stars-container">
-    <div class="stars"></div>
-    <div class="stars2"></div>
-</div>
 
-<div class="container" id="app">
-    <h1>The Sorting Hat</h1>
+    <canvas id="star-canvas"></canvas>
 
-    <svg class="hat" viewBox="0 0 200 200">
-        <path d="M30 160 C 30 140, 170 140, 170 160 C 170 180, 30 180, 30 160" fill="#3b2b1f"/>
-        <path d="M50 150 L100 20 L150 150 Q100 135 50 150" fill="#4a3526"/>
-        <path d="M85 80 Q100 70 115 80" stroke="#2a1d15" stroke-width="3" fill="none"/>
-        <path d="M80 110 Q100 100 120 110" stroke="#2a1d15" stroke-width="3" fill="none"/>
-        <path d="M85 95 Q90 90 95 95" stroke="#000" stroke-width="2" fill="none"/>
-        <path d="M105 95 Q110 90 115 95" stroke="#000" stroke-width="2" fill="none"/>
-    </svg>
+    <div class="container">
+        <div id="start-screen" class="fade-in">
+            <img src="https://www.pngall.com/wp-content/uploads/11/Magic-Hat-PNG-Image.png" class="sorting-hat-img" alt="Sorting Hat">
+            <h1 class="glow-text">The Sorting Hat</h1>
+            <p class="subtitle">MENCARI TEMPAT YANG TEPAT UNTUKMU...</p>
+            <button class="btn-magic" onclick="startQuiz()">MASUKI AULA BESAR</button>
+        </div>
 
-    <div class="quiz-box" id="quiz"></div>
-</div>
+        <div id="quiz-screen" class="quiz-box hidden">
+            <div class="corner top-left"></div>
+            <div class="corner top-right"></div>
+            <div class="corner bottom-left"></div>
+            <div class="corner bottom-right"></div>
+            <h2 id="question-text">Membaca Pikiran...</h2>
+            <div id="options-container"></div>
+        </div>
 
-<script>
-// Logic anti-repeat
-if (localStorage.getItem("sorting_done")) {
-    document.getElementById("quiz").innerHTML =
-        "<p style='font-size: 1.2rem; line-height: 1.8;'>Kepalamu telah membaca keputusan.<br><b style='color:#7aa2ff'>Sorting Hat tidak akan mengulang pilihannya.</b><br>Terimalah takdirmu.</p>";
-} else {
+        <div id="result-screen" class="hidden">
+            <div class="result-header">
+                <img id="house-img" src="" class="house-logo">
+                <h1 id="house-name">HOUSE</h1>
+            </div>
+            
+            <div id="attr-list" class="attr-container"></div>
+            
+            <p id="house-desc" class="desc-text"></p>
+            
+            <div class="footer-note">
+                <p>SELAMAT DATANG DI ASRAMA BARUMU.</p>
+                <button onclick="location.reload()" class="btn-reset">Ulangi Seleksi</button>
+            </div>
+        </div>
+    </div>
 
-const questions = [
- {
-  q:"Saat menghadapi masalah besar, tindakan apa yang kamu ambil?",
-  a:[
-    {t:"Menghadapinya langsung dengan berani",h:"Ignivar"},
-    {t:"Menyusun rencana matang secara rahasia",h:"Noctyra"},
-    {t:"Mengikuti kata hati dan kebebasan",h:"Aeralis"},
-    {t:"Bertahan bersama rekan yang lain",h:"Terradon"}
-  ]
- },
- {
-  q:"Apa yang paling kamu hargai dalam hidup?",
-  a:[
-    {t:"Kehormatan dan Kekuatan",h:"Ignivar"},
-    {t:"Pengetahuan dan Logika",h:"Noctyra"},
-    {t:"Petualangan dan Langit",h:"Aeralis"},
-    {t:"Kesetiaan dan Kejujuran",h:"Terradon"}
-  ]
- },
- {
-  q:"Bagaimana dunia ideal menurutmu?",
-  a:[
-    {t:"Dunia yang penuh dengan pahlawan",h:"Ignivar"},
-    {t:"Dunia yang teratur dan cerdas",h:"Noctyra"},
-    {t:"Dunia tanpa batas dan aturan kaku",h:"Aeralis"},
-    {t:"Dunia yang damai dan saling peduli",h:"Terradon"}
-  ]
- },
- {
-  q:"Pilih elemen kekuatanmu:",
-  a:[
-    {t:"Api yang membakar semangat",h:"Ignivar"},
-    {t:"Bayangan yang menyimpan rahasia",h:"Noctyra"},
-    {t:"Angin yang membawa pesan jauh",h:"Aeralis"},
-    {t:"Bumi yang kokoh tak tergoyahkan",h:"Terradon"}
-  ]
- },
- {
-  q:"Apa ketakutan terbesarmu?",
-  a:[
-    {t:"Dianggap sebagai penakut",h:"Ignivar"},
-    {t:"Kegelapan tanpa ilmu pengetahuan",h:"Noctyra"},
-    {t:"Terikat dalam kurungan selamanya",h:"Aeralis"},
-    {t:"Kehilangan kepercayaan dari sahabat",h:"Terradon"}
-  ]
- }
-];
-
-let index = 0;
-let score = {Ignivar:0, Noctyra:0, Aeralis:0, Terradon:0};
-const quiz = document.getElementById("quiz");
-
-function showQ() {
- let q = questions[index];
- quiz.innerHTML = `
-   <div class="question">${q.q}</div>
-   <div class="options">
-     ${q.a.map(o=>`<button onclick="pick('${o.h}')">${o.t}</button>`).join("")}
-   </div>`;
-}
-
-window.pick = function(h) {
- score[h]++;
- index++;
- if(index < questions.length) {
-    showQ();
- } else {
-    result();
- }
-}
-
-function result() {
- localStorage.setItem("sorting_done","yes");
- let house = Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
-
- const data = {
-  Ignivar:{
-    desc:"Jiwa pemenang sejati. Kamu adalah api yang menerangi kegelapan dengan keberanian tanpa batas.",
-    attr:"Elemen: Api · Sifat: Berani · Warna: Merah Crimson",
-    color:"#ff4d4d",
-    shape: "M100 20 L180 180 L20 180 Z"
-  },
-  Noctyra:{
-    desc:"Pencari kebenaran di balik bayangan. Kecerdasanmu adalah senjata tersembunyi yang mematikan.",
-    attr:"Elemen: Bayangan · Sifat: Cerdas · Warna: Biru Indigo",
-    color:"#7aa2ff",
-    shape: "M40 40 L160 40 L160 160 L40 160 Z"
-  },
-  Aeralis:{
-    desc:"Sang penjelajah langit. Bagimu, tidak ada batasan yang mampu menghentikan imajinasi dan kebebasan.",
-    attr:"Elemen: Angin · Sifat: Bebas · Warna: Perak Azure",
-    color:"#9fd4ff",
-    shape: "M100 20 Q180 100 100 180 Q20 100 100 20"
-  },
-  Terradon:{
-    desc:"Fondasi yang kuat bagi sesama. Kesetiaanmu adalah harta karun yang paling berharga di dunia ini.",
-    attr:"Elemen: Bumi · Sifat: Setia · Warna: Hijau Emerald",
-    color:"#7aff9f",
-    shape: "M100 20 L180 60 L180 140 L100 180 L20 140 L20 60 Z"
-  }
- };
-
- quiz.style.border = `1px solid ${data[house].color}`;
- quiz.innerHTML = `
- <div class="result">
-   <div class="house-name" style="color:${data[house].color}; text-shadow: 0 0 20px ${data[house].color}66;">${house}</div>
-
-   <svg class="house-img" viewBox="0 0 200 200">
-     <path d="${data[house].shape}" fill="${data[house].color}" opacity="0.8"/>
-     <circle cx="100" cy="100" r="30" fill="#fff" opacity="0.2"/>
-     <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="20" font-family="Cinzel">${house[0]}</text>
-   </svg>
-
-   <div class="desc">${data[house].desc}</div>
-   <div class="attr" style="border-color:${data[house].color}44">${data[house].attr}</div>
-   
-   <button onclick="location.reload()" style="margin-top:30px; background:none; border:none; color:#7aa2ff; cursor:pointer; font-family:Poppins; text-decoration:underline;">Selesai</button>
- </div>`;
-}
-
-showQ();
-}
-</script>
+    <script src="script.js"></script>
 </body>
 </html>
