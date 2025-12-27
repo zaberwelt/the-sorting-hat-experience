@@ -1,294 +1,308 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-<meta charset="UTF-8" />
-<title>The Sorting Hat Ceremony</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Sorting Hat Ceremony</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root{
-  --gold:#e6c15a;
-  --shadow:rgba(230,193,90,.35);
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400&display=swap');
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    color: #eaeaff;
+    background: radial-gradient(circle at top, #0a0f2a, #000);
+    overflow-x: hidden;
 }
 
-*{box-sizing:border-box}
-body{
-  margin:0; min-height:100vh;
-  font-family:'Cinzel',serif;
-  color:#f5f2e9;
-  background:
-    radial-gradient(60% 40% at 50% 0%, rgba(255,215,0,.18), transparent 60%),
-    linear-gradient(rgba(0,0,0,.85), rgba(0,0,0,.92)),
-    url('https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1600&q=80');
-  background-size:cover;
-  background-position:center;
-  overflow-x:hidden;
+/* ===== STAR BACKGROUND ===== */
+.stars, .stars2 {
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background-repeat: repeat;
+    animation: moveStars 120s linear infinite;
+    z-index: -2;
+}
+.stars {
+    background-image: radial-gradient(#ffffff55 1px, transparent 1px);
+    background-size: 80px 80px;
+}
+.stars2 {
+    background-image: radial-gradient(#88aaff88 1px, transparent 1px);
+    background-size: 120px 120px;
+    animation-duration: 200s;
+}
+@keyframes moveStars {
+    from { transform: translate(0,0); }
+    to { transform: translate(-500px,-500px); }
 }
 
-/* ===== LAYOUT ===== */
-.center{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
+/* ===== CONTAINER ===== */
+.container {
+    max-width: 820px;
+    margin: auto;
+    padding: 40px 20px 80px;
+    text-align: center;
 }
 
-.card{
-  width:100%;
-  max-width:760px;
-  background:rgba(0,0,0,.55);
-  border-radius:30px;
-  padding:44px;
-  position:relative;
-  box-shadow:0 0 60px var(--shadow);
-  animation:fadeUp 1.4s ease both;
+/* ===== TITLE ===== */
+h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.6rem;
+    letter-spacing: 3px;
+    text-shadow: 0 0 15px #7aa2ff;
 }
 
-/* Ornamental corners */
-.card::before,.card::after{
-  content:"";
-  position:absolute; width:72px; height:72px;
-  border:2px solid var(--gold);
+/* ===== HAT SVG ===== */
+.hat {
+    width: 220px;
+    margin: 20px auto;
+    animation: floatHat 4s ease-in-out infinite;
 }
-.card::before{top:-12px;left:-12px;border-right:none;border-bottom:none}
-.card::after{bottom:-12px;right:-12px;border-left:none;border-top:none}
-
-h1,h2{
-  font-family:'Uncial Antiqua',cursive;
-  text-align:center;
-  letter-spacing:.5px;
-}
-p{line-height:1.9; text-align:center; opacity:.95}
-
-.btn{
-  width:100%;
-  margin-top:16px;
-  padding:16px 18px;
-  border-radius:22px;
-  border:none;
-  cursor:pointer;
-  font-family:'Cinzel',serif;
-  font-size:16px;
-  background:linear-gradient(135deg,#bfa23a,#ffd700);
-  color:#1a1400;
-  transition:.35s;
-}
-.btn:hover{transform:scale(1.05); box-shadow:0 0 20px var(--gold)}
-
-.hidden{display:none}
-
-/* ===== START ===== */
-.hat{
-  width:190px;
-  display:block;
-  margin:18px auto 10px;
-  animation:float 3s ease-in-out infinite;
-  filter:drop-shadow(0 10px 18px rgba(0,0,0,.6));
-}
-.whisper{
-  font-style:italic; opacity:.85;
+@keyframes floatHat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
 }
 
-/* ===== QUIZ ===== */
-.q-title{margin-bottom:10px}
-.option{margin-top:12px}
-
-/* ===== RESULT (NO BOX) ===== */
-.result{
-  text-align:center;
-  animation:reveal 2s ease both;
-}
-.house-name{
-  font-family:'Uncial Antiqua',cursive;
-  font-size:40px; margin:10px 0;
-}
-.gryffindor{color:#d62828}
-.hufflepuff{color:#fcbf49}
-.ravenclaw{color:#4ea8de}
-.slytherin{color:#2a9d8f}
-
-.house-img{
-  width:230px; margin:14px auto;
-  animation:glow 2.4s ease-in-out infinite alternate;
+/* ===== QUIZ BOX ===== */
+.quiz-box {
+    position: relative;
+    margin-top: 40px;
+    padding: 35px 25px;
+    background: linear-gradient(180deg, #050b2a, #020416);
+    border-radius: 22px;
+    box-shadow: 0 0 40px #2f5cff33;
 }
 
-.badge-area{
-  margin-top:26px;
-  display:flex; gap:18px; justify-content:center; flex-wrap:wrap;
+/* glowing corners */
+.quiz-box::before, .quiz-box::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 24px;
+    background: linear-gradient(120deg,
+        transparent 30%,
+        #9fd4ff,
+        #ffffff,
+        #9fd4ff,
+        transparent 70%);
+    animation: glowMove 4s linear infinite;
+    mask: 
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    padding: 3px;
 }
-.badge-card{
-  width:170px;
-  background:rgba(0,0,0,.55);
-  border:1px solid var(--gold);
-  border-radius:18px;
-  padding:14px 16px;
-  box-shadow:0 0 18px var(--shadow);
-  animation:fadeUp 1.4s ease both;
+.quiz-box::after {
+    animation-delay: 2s;
+    opacity: 0.6;
 }
-.badge-card img{
-  width:64px; display:block; margin:0 auto 8px;
-  filter:drop-shadow(0 0 12px var(--gold));
+@keyframes glowMove {
+    from { background-position: 0% 0%; }
+    to { background-position: 200% 0%; }
 }
-.badge-title{
-  font-family:'Uncial Antiqua',cursive; font-size:15px;
-}
-.badge-desc{font-size:13px; opacity:.9}
 
-/* ===== ANIMS ===== */
-@keyframes fadeUp{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:none}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
-@keyframes glow{from{filter:drop-shadow(0 0 10px var(--gold))}to{filter:drop-shadow(0 0 30px var(--gold))}}
-@keyframes reveal{from{opacity:0;filter:blur(6px)}to{opacity:1;filter:none}}
+.question {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.options button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid #4a6cff55;
+    background: rgba(10,15,60,0.6);
+    color: #eaeaff;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+.options button:hover {
+    background: rgba(80,120,255,0.2);
+    box-shadow: 0 0 15px #7aa2ff88;
+}
+
+/* ===== RESULT ===== */
+.result {
+    margin-top: 60px;
+    animation: fadeIn 2s ease forwards;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.house-img {
+    width: 260px;
+    margin: 25px auto;
+    animation: pulse 3s infinite;
+}
+@keyframes pulse {
+    0%,100% { filter: drop-shadow(0 0 10px #88aaff); }
+    50% { filter: drop-shadow(0 0 25px #ffffff); }
+}
+
+.house-name {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    letter-spacing: 4px;
+}
+
+.desc {
+    max-width: 650px;
+    margin: 20px auto;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+.attr {
+    margin-top: 20px;
+    font-style: italic;
+    color: #cfd9ff;
+}
 </style>
 </head>
 
 <body>
-<div class="center">
+<div class="stars"></div>
+<div class="stars2"></div>
 
-  <!-- START -->
-  <div class="card" id="start">
-    <h1>The Sorting Hat</h1>
-    <img class="hat" src="https://i.ibb.co/5v6mV9m/sorting-hat.png" alt="Sorting Hat">
-    <p class="whisper">“Hmm… difficult. Very difficult.”</p>
-    <p>Answer truthfully. You will be sorted only once.</p>
-    <button class="btn" onclick="start()">Begin the Ceremony</button>
-  </div>
+<div class="container" id="app">
+    <h1>Sorting Hat Ceremony</h1>
 
-  <!-- QUIZ -->
-  <div class="card hidden" id="quiz"></div>
+    <!-- HAT SVG ART -->
+    <svg class="hat" viewBox="0 0 200 200">
+        <path d="M40 160 Q100 180 160 160 L150 150 Q100 140 50 150 Z" fill="#3b2b1f"/>
+        <path d="M70 40 Q100 10 130 40 L150 150 Q100 140 50 150 Z" fill="#5a3d28"/>
+        <circle cx="110" cy="90" r="5" fill="#111"/>
+    </svg>
 
-  <!-- RESULT (NO BOX FEEL) -->
-  <div class="hidden" id="result"></div>
-
+    <div class="quiz-box" id="quiz"></div>
 </div>
 
 <script>
-let i=0, lock=false;
-const score={Gryffindor:0,Hufflepuff:0,Ravenclaw:0,Slytherin:0};
+if (localStorage.getItem("sorting_done")) {
+    document.getElementById("quiz").innerHTML =
+        "<p>Kepalamu telah membaca keputusan. Sorting Hat tidak mengulang pilihan.</p>";
+} else {
 
-const questions=[
-  ["When faced with danger, you…",
-    ["Stand your ground","Gryffindor"],
-    ["Shield others","Hufflepuff"],
-    ["Calculate outcomes","Ravenclaw"],
-    ["Turn it to advantage","Slytherin"]
-  ],
-  ["What do you value most?",
-    ["Honor","Gryffindor"],
-    ["Loyalty","Hufflepuff"],
-    ["Knowledge","Ravenclaw"],
-    ["Ambition","Slytherin"]
-  ],
-  ["In a group, you usually…",
-    ["Lead boldly","Gryffindor"],
-    ["Keep harmony","Hufflepuff"],
-    ["Design the plan","Ravenclaw"],
-    ["Control direction","Slytherin"]
-  ],
-  ["Rules are…",
-    ["Optional","Gryffindor"],
-    ["Important","Hufflepuff"],
-    ["Logical","Ravenclaw"],
-    ["Tools","Slytherin"]
-  ],
-  ["You wish to be remembered as…",
-    ["A hero","Gryffindor"],
-    ["A kind soul","Hufflepuff"],
-    ["A brilliant mind","Ravenclaw"],
-    ["A legend","Slytherin"]
+const questions = [
+ {
+  q:"Saat menghadapi masalah besar, apa yang paling kamu lakukan?",
+  a:[
+    {t:"Menghadapinya dengan keberanian penuh",h:"Ignivar"},
+    {t:"Menyusun strategi sebelum bergerak",h:"Noctyra"},
+    {t:"Mengikuti intuisi dan perasaan",h:"Aeralis"},
+    {t:"Mencari jalan paling aman",h:"Terradon"}
   ]
+ },
+ {
+  q:"Hal apa yang paling kamu hargai?",
+  a:[
+    {t:"Keberanian",h:"Ignivar"},
+    {t:"Kecerdasan",h:"Noctyra"},
+    {t:"Kebebasan",h:"Aeralis"},
+    {t:"Kesetiaan",h:"Terradon"}
+  ]
+ },
+ {
+  q:"Bagaimana orang lain mengingatmu?",
+  a:[
+    {t:"Pemimpin berani",h:"Ignivar"},
+    {t:"Pemikir tajam",h:"Noctyra"},
+    {t:"Jiwa bebas",h:"Aeralis"},
+    {t:"Sahabat setia",h:"Terradon"}
+  ]
+ },
+ {
+  q:"Tempat favoritmu?",
+  a:[
+    {t:"Medan tempur",h:"Ignivar"},
+    {t:"Perpustakaan gelap",h:"Noctyra"},
+    {t:"Langit terbuka",h:"Aeralis"},
+    {t:"Rumah yang hangat",h:"Terradon"}
+  ]
+ },
+ {
+  q:"Jika gagal, apa reaksimu?",
+  a:[
+    {t:"Bangkit lebih kuat",h:"Ignivar"},
+    {t:"Menganalisis kesalahan",h:"Noctyra"},
+    {t:"Mencoba jalan baru",h:"Aeralis"},
+    {t:"Bertahan perlahan",h:"Terradon"}
+  ]
+ }
 ];
 
-const houseImg={
-  Gryffindor:"https://i.ibb.co/z5V0fK6/gryffindor.png",
-  Hufflepuff:"https://i.ibb.co/7r0Q6cK/hufflepuff.png",
-  Ravenclaw:"https://i.ibb.co/WKQ1sBc/ravenclaw.png",
-  Slytherin:"https://i.ibb.co/jTgS5gN/slytherin.png"
-};
+let index = 0;
+let score = {Ignivar:0, Noctyra:0, Aeralis:0, Terradon:0};
+const quiz = document.getElementById("quiz");
 
-const desc={
-  Gryffindor:"Bravery burns within you. You act when others hesitate.",
-  Hufflepuff:"Your strength is your heart—steadfast and true.",
-  Ravenclaw:"Wisdom guides every step you take.",
-  Slytherin:"Ambition fuels you. You shape destiny."
-};
-
-const badges={
-  Gryffindor:[
-    ["🦁 Courage","https://i.ibb.co/2Z8Z3nX/fire.png","Bold spirit"],
-    ["🔥 Fire","https://i.ibb.co/2Z8Z3nX/fire.png","Action & passion"]
-  ],
-  Hufflepuff:[
-    ["🦡 Loyalty","https://i.ibb.co/8P1X9f8/earth.png","Trust & care"],
-    ["🌱 Earth","https://i.ibb.co/8P1X9f8/earth.png","Stability"]
-  ],
-  Ravenclaw:[
-    ["🦅 Wisdom","https://i.ibb.co/6b4nTfY/air.png","Knowledge"],
-    ["🌬 Air","https://i.ibb.co/6b4nTfY/air.png","Clarity"]
-  ],
-  Slytherin:[
-    ["🐍 Ambition","https://i.ibb.co/vqkz2HC/water.png","Drive & power"],
-    ["💧 Water","https://i.ibb.co/vqkz2HC/water.png","Adaptation"]
-  ]
-};
-
-function start(){
-  document.getElementById("start").classList.add("hidden");
-  document.getElementById("quiz").classList.remove("hidden");
-  showQ();
+function showQ() {
+ let q = questions[index];
+ quiz.innerHTML = `
+   <div class="question">${q.q}</div>
+   <div class="options">
+     ${q.a.map(o=>`<button onclick="pick('${o.h}')">${o.t}</button>`).join("")}
+   </div>`;
+}
+window.pick = function(h) {
+ score[h]++;
+ index++;
+ if(index<questions.length) showQ();
+ else result();
 }
 
-function showQ(){
-  const q=questions[i];
-  const box=document.getElementById("quiz");
-  box.innerHTML=`<h2 class="q-title">${q[0]}</h2>`;
-  q.slice(1).forEach(o=>{
-    const b=document.createElement("button");
-    b.className="btn option";
-    b.textContent=o[0];
-    b.onclick=()=>pick(o[1]);
-    box.appendChild(b);
-  });
+function result() {
+ localStorage.setItem("sorting_done","yes");
+ let house = Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
+
+ const data = {
+  Ignivar:{
+    desc:"House api keberanian. Jiwa kepemimpinan dan tekad membara mengalir dalam darahmu.",
+    attr:"Elemen: Api · Sifat: Berani · Warna: Merah Emas",
+    color:"#ff6a3d"
+  },
+  Noctyra:{
+    desc:"House bayangan kecerdasan. Strategi, logika, dan rahasia adalah kekuatanmu.",
+    attr:"Elemen: Bayangan · Sifat: Cerdas · Warna: Biru Gelap",
+    color:"#6a7cff"
+  },
+  Aeralis:{
+    desc:"House angin kebebasan. Imajinasi dan intuisi menuntun setiap langkahmu.",
+    attr:"Elemen: Angin · Sifat: Bebas · Warna: Perak Langit",
+    color:"#9fd4ff"
+  },
+  Terradon:{
+    desc:"House bumi kesetiaan. Keteguhan dan hati hangat adalah fondasimu.",
+    attr:"Elemen: Bumi · Sifat: Setia · Warna: Hijau Kristal",
+    color:"#7aff9f"
+  }
+ };
+
+ quiz.innerHTML = `
+ <div class="result">
+   <div class="house-name" style="color:${data[house].color}">${house}</div>
+
+   <!-- HOUSE SVG ART -->
+   <svg class="house-img" viewBox="0 0 200 200">
+     <polygon points="100,20 180,180 20,180" fill="${data[house].color}" opacity="0.85"/>
+     <circle cx="100" cy="110" r="35" fill="#ffffffaa"/>
+   </svg>
+
+   <div class="desc">${data[house].desc}</div>
+   <div class="attr">${data[house].attr}</div>
+ </div>`;
 }
 
-function pick(h){
-  if(lock) return; lock=true;
-  score[h]++; i++;
-  setTimeout(()=>{
-    lock=false;
-    i<questions.length ? showQ() : showResult();
-  },420);
-}
-
-function showResult(){
-  document.getElementById("quiz").remove();
-  const h=Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
-  const r=document.getElementById("result");
-  r.classList.remove("hidden");
-
-  let badgeHTML="";
-  badges[h].forEach(b=>{
-    badgeHTML+=`
-      <div class="badge-card">
-        <img src="${b[1]}" alt="">
-        <div class="badge-title">${b[0]}</div>
-        <div class="badge-desc">${b[2]}</div>
-      </div>`;
-  });
-
-  r.innerHTML=`
-    <div class="result">
-      <h1>You belong to</h1>
-      <div class="house-name ${h.toLowerCase()}">${h}</div>
-      <img class="house-img" src="${houseImg[h]}" alt="">
-      <p>${desc[h]}</p>
-      <div class="badge-area">${badgeHTML}</div>
-      <p><i>The Sorting Hat has spoken.</i></p>
-    </div>`;
+showQ();
 }
 </script>
 </body>
