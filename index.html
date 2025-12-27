@@ -4,52 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Sorting Hat Ceremony</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * { box-sizing: border-box; }
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
             background-color: #050508;
             font-family: 'Quicksand', sans-serif;
-            color: white; overflow: hidden;
+            color: white; overflow-x: hidden;
         }
 
         /* Background Bintang Bergerak */
         #star-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; background: radial-gradient(circle at center, #0a0a1a 0%, #050508 100%);
+            z-index: -1; pointer-events: none;
+            background: radial-gradient(circle at center, #0a0a1a 0%, #050508 100%);
         }
 
         .container {
             display: flex; flex-direction: column; align-items: center;
-            justify-content: center; height: 100vh; padding: 20px;
-            overflow-y: auto;
+            justify-content: center; min-height: 100vh; padding: 20px;
         }
 
         /* Gambar Hat Awal */
         .sorting-hat-img {
-            width: 180px; height: auto;
+            width: 200px; height: auto;
             filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
             animation: float 4s ease-in-out infinite;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(-3deg); }
-            50% { transform: translateY(-15px) rotate(3deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
         }
 
         /* Kotak Kuis Mewah */
         .quiz-box {
             position: relative; width: 100%; max-width: 500px;
-            background: rgba(15, 15, 25, 0.85);
-            padding: 30px; border: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px); text-align: center;
+            background: rgba(15, 15, 25, 0.8);
+            padding: 40px 30px; border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px); text-align: center;
+            border-radius: 4px;
         }
 
-        /* Hiasan Sudut Bercahaya (Putih-Biru) */
+        /* Hiasan Sudut Bercahaya Bergerak */
         .corner {
-            position: absolute; width: 25px; height: 25px;
+            position: absolute; width: 30px; height: 30px;
             border: 2px solid transparent; animation: cornerGlow 2s infinite alternate;
         }
         .top-left { top: -2px; left: -2px; border-top-color: #fff; border-left-color: #00d4ff; }
@@ -58,36 +60,57 @@
         .bottom-right { bottom: -2px; right: -2px; border-bottom-color: #fff; border-right-color: #00d4ff; }
 
         @keyframes cornerGlow {
-            0% { filter: drop-shadow(0 0 2px #00d4ff); opacity: 0.5; }
-            100% { filter: drop-shadow(0 0 12px #fff); opacity: 1; }
+            0% { filter: drop-shadow(0 0 2px #00d4ff); opacity: 0.4; }
+            100% { filter: drop-shadow(0 0 15px #fff); opacity: 1; }
         }
 
-        h1, h2 { font-family: 'Cinzel Decorative', cursive; color: #d4af37; margin-bottom: 15px; }
+        h1, h2 { font-family: 'Cinzel Decorative', cursive; color: #d4af37; text-transform: uppercase; }
 
         .btn-option {
-            display: block; width: 100%; padding: 12px; margin: 8px 0;
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
-            color: white; cursor: pointer; transition: 0.3s; border-radius: 5px;
+            display: block; width: 100%; padding: 15px; margin: 10px 0;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);
+            color: white; cursor: pointer; transition: 0.3s; border-radius: 8px; font-size: 1rem;
         }
-        .btn-option:hover { background: rgba(0, 212, 255, 0.2); border-color: #00d4ff; }
-
-        /* Hasil Akhir */
-        #result-screen { display: none; text-align: center; max-width: 700px; animation: fadeIn 2s ease; }
-        
-        .house-logo { width: 150px; margin-bottom: 15px; filter: drop-shadow(0 0 25px currentColor); }
-
-        .attr-container { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
-        
-        /* Gambar Atribut Sesuai Contoh */
-        .attr-card {
-            background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px;
-            width: 100px; border: 1px solid #d4af37;
+        .btn-option:hover { 
+            background: rgba(0, 212, 255, 0.15); 
+            border-color: #00d4ff;
+            transform: translateY(-2px);
         }
-        .attr-card img { width: 50px; height: 50px; object-fit: contain; margin-bottom: 5px; }
-        .attr-card span { display: block; font-size: 0.8em; font-weight: bold; }
+
+        /* Hasil Akhir Tanpa Kotak */
+        #result-screen { 
+            display: none; text-align: center; max-width: 800px; 
+            animation: fadeIn 2.5s ease;
+        }
+        
+        .house-logo { 
+            width: 180px; margin-bottom: 20px; 
+            filter: drop-shadow(0 0 30px currentColor);
+        }
+
+        /* Atribut Persis Seperti Contoh (Gambar 2) */
+        .attr-container { 
+            display: flex; justify-content: center; gap: 12px; 
+            flex-wrap: wrap; margin: 30px 0; 
+        }
+        
+        .attr-pill {
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(255, 255, 255, 0.07);
+            padding: 8px 16px; border-radius: 50px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            font-size: 0.9rem; font-weight: 500;
+        }
+        
+        .attr-pill i { width: 18px; height: 18px; color: #d4af37; }
+
+        .desc-text { 
+            line-height: 1.8; color: #eee; font-size: 1.1rem; 
+            max-width: 600px; margin: 0 auto;
+        }
 
         .hidden { display: none; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -98,41 +121,43 @@
     <div id="start-screen">
         <img src="https://www.pngall.com/wp-content/uploads/11/Magic-Hat-PNG-Image.png" class="sorting-hat-img" alt="Sorting Hat">
         <h1>The Sorting Hat</h1>
-        <button class="btn-option" onclick="startQuiz()" style="width: 200px; margin: auto; border-color: #d4af37;">Mulai Seleksi</button>
+        <p style="color: #aaa; letter-spacing: 3px;">TEMUKAN TAKDIRMU</p>
+        <button class="btn-option" onclick="startQuiz()" style="width: 220px; margin: 30px auto; border-color: #d4af37;">MULAI UPACARA</button>
     </div>
 
     <div id="quiz-screen" class="quiz-box hidden">
         <div class="corner top-left"></div><div class="corner top-right"></div>
         <div class="corner bottom-left"></div><div class="corner bottom-right"></div>
-        <h2 id="question-text">Memilih...</h2>
+        <h2 id="question-text" style="font-size: 1.2rem; min-height: 60px;">Membaca Pikiran...</h2>
         <div id="options-container"></div>
     </div>
 
     <div id="result-screen">
-        <img id="house-img" src="" class="house-logo" alt="House Logo">
-        <h1 id="house-name">HOUSE</h1>
-        <p id="house-desc" style="line-height: 1.6; color: #ccc;"></p>
+        <img id="house-img" src="" class="house-logo">
+        <h1 id="house-name" style="font-size: 3.5rem; letter-spacing: 5px;">HOUSE</h1>
         
-        <div id="attr-list" class="attr-container">
-            </div>
-        <p style="margin-top: 30px; font-style: italic; color: #00d4ff;">Takdirmu telah terkunci.</p>
+        <div id="attr-list" class="attr-container"></div>
+        
+        <p id="house-desc" class="desc-text"></p>
+        
+        <p style="margin-top: 50px; color: #00d4ff; font-style: italic; font-size: 0.8rem; letter-spacing: 2px;">KEPUTUSAN INI MUTLAK. SELAMAT DATANG DI RUMAH BARUMU.</p>
     </div>
 </div>
 
 <script>
     const questions = [
-        { q: "Kualitas apa yang paling kamu banggakan?", a: [{t:"Keberanian", h:"G"}, {t:"Ambisi", h:"S"}, {t:"Kecerdasan", h:"R"}, {t:"Kesetiaan", h:"H"}] },
-        { q: "Pilih hewan peliharaan sihirmu:", a: [{t:"Burung Hantu", h:"R"}, {t:"Kucing", h:"G"}, {t:"Tikus", h:"H"}, {t:"Ular", h:"S"}] },
-        { q: "Apa yang kamu lakukan jika melihat teman dalam bahaya?", a: [{t:"Langsung menolong", h:"G"}, {t:"Mencari rencana", h:"R"}, {t:"Meminta bantuan", h:"H"}, {t:"Berpikir untung rugi", h:"S"}] },
-        { q: "Pilih ramuanmu:", a: [{t:"Ramuan Kekuatan", h:"G"}, {t:"Ramuan Licin", h:"S"}, {t:"Ramuan Kebijakan", h:"R"}, {t:"Ramuan Kejujuran", h:"H"}] },
-        { q: "Mana jalan yang kamu pilih?", a: [{t:"Jalan terjal mendaki", h:"G"}, {t:"Jalan rahasia yang gelap", h:"S"}, {t:"Jalan terang berliku", h:"R"}, {t:"Jalan setapak pedesaan", h:"H"}] }
+        { q: "Mana yang paling kamu hargai dalam dirimu?", a: [{t:"Keberanian", h:"G"}, {t:"Ambisi", h:"S"}, {t:"Kecerdasan", h:"R"}, {t:"Kesetiaan", h:"H"}] },
+        { q: "Jika melihat ketidakadilan, kamu akan...", a: [{t:"Melawan langsung", h:"G"}, {t:"Menganalisis situasinya", h:"R"}, {t:"Tetap setia di sisi teman", h:"H"}, {t:"Mengambil keuntungan", h:"S"}] },
+        { q: "Apa yang paling kamu inginkan dari orang lain?", a: [{t:"Rasa hormat", h:"S"}, {t:"Kepercayaan", h:"H"}, {t:"Kekaguman", h:"R"}, {t:"Ketergantungan", h:"G"}] },
+        { q: "Pilih artefak yang paling menarik:", a: [{t:"Pedang Kuno", h:"G"}, {t:"Cincin Perak", h:"S"}, {t:"Buku Tua", h:"R"}, {t:"Piala Emas", h:"H"}] },
+        { q: "Bagaimana kamu ingin dikenang?", a: [{t:"Sebagai Pahlawan", h:"G"}, {t:"Sebagai Pemimpin", h:"S"}, {t:"Sebagai Orang Bijak", h:"R"}, {t:"Sebagai Teman Sejati", h:"H"}] }
     ];
 
     const houses = {
-        G: { name: "Gryffindor", color: "#ae0001", img: "https://www.pngall.com/wp-content/uploads/11/Gryffindor-Logo-PNG-Image.png", desc: "Tempat bagi mereka yang berani dan ksatria.", attrs: [{n: "Berani", i: "https://cdn-icons-png.flaticon.com/512/3222/3222713.png"}, {n: "Ksatria", i: "https://cdn-icons-png.flaticon.com/512/9312/9312130.png"}] },
-        S: { name: "Slytherin", color: "#2a623d", img: "https://www.pngall.com/wp-content/uploads/11/Slytherin-Logo-PNG-Image.png", desc: "Bagi mereka yang ambisius dan cerdik.", attrs: [{n: "Ambisi", i: "https://cdn-icons-png.flaticon.com/512/2550/2550341.png"}, {n: "Cerdik", i: "https://cdn-icons-png.flaticon.com/512/1041/1041910.png"}] },
-        R: { name: "Ravenclaw", color: "#222f5b", img: "https://www.pngall.com/wp-content/uploads/11/Ravenclaw-Logo-PNG-Image.png", desc: "Penyihir bijak dengan kecerdasan tinggi.", attrs: [{n: "Bijak", i: "https://cdn-icons-png.flaticon.com/512/2436/2436702.png"}, {n: "Cerdas", i: "https://cdn-icons-png.flaticon.com/512/2014/2014603.png"}] },
-        H: { name: "Hufflepuff", color: "#ecb939", img: "https://www.pngall.com/wp-content/uploads/11/Hufflepuff-Logo-PNG-Image.png", desc: "Rumah bagi yang setia dan pekerja keras.", attrs: [{n: "Setia", i: "https://cdn-icons-png.flaticon.com/512/2589/2589175.png"}, {n: "Jujur", i: "https://cdn-icons-png.flaticon.com/512/1533/1533900.png"}] }
+        G: { name: "Gryffindor", color: "#ae0001", img: "https://www.pngall.com/wp-content/uploads/11/Gryffindor-Logo-PNG-Image.png", desc: "Keberanianmu melampaui rasa takut. Kamu adalah sosok yang akan berdiri paling depan untuk membela keadilan.", attrs: [{n:"Berani", i:"shield"}, {n:"Ksatria", i:"swords"}, {n:"Tekad", i:"flame"}] },
+        S: { name: "Slytherin", color: "#2a623d", img: "https://www.pngall.com/wp-content/uploads/11/Slytherin-Logo-PNG-Image.png", desc: "Kamu memiliki visi yang tajam dan keinginan kuat untuk mencapai puncak. Ambisimu akan membawamu pada keagungan.", attrs: [{n:"Ambisi", i:"crown"}, {n:"Cerdik", i:"zap"}, {n:"Pemimpin", i:"gem"}] },
+        R: { name: "Ravenclaw", color: "#222f5b", img: "https://www.pngall.com/wp-content/uploads/11/Ravenclaw-Logo-PNG-Image.png", desc: "Pikiranmu adalah senjata terkuatmu. Kamu melihat apa yang orang lain lewatkan. Selamat datang di rumah para bijak.", attrs: [{n:"Bijak", i:"book"}, {n:"Kreatif", i:"palette"}, {n:"Cerdas", i:"brain"}] },
+        H: { name: "Hufflepuff", color: "#ecb939", img: "https://www.pngall.com/wp-content/uploads/11/Hufflepuff-Logo-PNG-Image.png", desc: "Ketulusan hatimu adalah sihir yang paling langka. Kamu menghargai kerja keras dan kesetiaan di atas segalanya.", attrs: [{n:"Setia", i:"heart"}, {n:"Sabar", i:"hourglass"}, {n:"Jujur", i:"check-circle"}] }
     };
 
     let current = 0;
@@ -153,7 +178,12 @@
             const b = document.createElement('button');
             b.className = 'btn-option';
             b.innerText = a.t;
-            b.onclick = () => { scores[a.h]++; current++; if(current<5) showQ(); else showResult(); };
+            b.onclick = () => { 
+                scores[a.h]++; 
+                current++; 
+                if(current < 5) showQ(); 
+                else showResult(); 
+            };
             opt.appendChild(b);
         });
     }
@@ -163,42 +193,73 @@
         const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
         const h = houses[winner];
 
-        document.getElementById('house-name').innerText = h.name;
-        document.getElementById('house-name').style.color = h.color;
-        document.getElementById('house-img').src = h.img;
+        const nameTag = document.getElementById('house-name');
+        nameTag.innerText = h.name;
+        nameTag.style.color = h.color;
+        nameTag.style.textShadow = `0 0 20px ${h.color}`;
+
+        const houseImg = document.getElementById('house-img');
+        houseImg.src = h.img;
+        houseImg.style.color = h.color;
+        
         document.getElementById('house-desc').innerText = h.desc;
 
         const list = document.getElementById('attr-list');
+        list.innerHTML = '';
         h.attrs.forEach(at => {
-            list.innerHTML += `<div class="attr-card"><img src="${at.i}"><span>${at.n}</span></div>`;
+            list.innerHTML += `
+                <div class="attr-pill">
+                    <i data-lucide="${at.i}"></i>
+                    <span>${at.n}</span>
+                </div>`;
         });
 
+        lucide.createIcons();
         document.getElementById('result-screen').style.display = 'block';
     }
 
-    // Canvas Bintang (Fixed)
+    // --- CANVAS BINTANG (FIXED & MEWAH) ---
     const canvas = document.getElementById('star-canvas');
     const ctx = canvas.getContext('2d');
     let stars = [];
 
-    function resize() {
+    function initStars() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         stars = [];
-        for(let i=0; i<150; i++) stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, s:Math.random()*2, d:Math.random()*0.5});
+        for(let i=0; i<200; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 1.5 + 0.2,
+                speed: Math.random() * 0.5 + 0.1,
+                opacity: Math.random()
+            });
+        }
     }
 
-    function animate() {
+    function drawStars() {
         ctx.clearRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle = "#fff";
         stars.forEach(s => {
-            ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, Math.PI*2); ctx.fill();
-            s.y += s.d; if(s.y > canvas.height) s.y = 0;
+            ctx.fillStyle = `rgba(255, 255, 255, ${s.opacity})`;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
+            ctx.fill();
+            
+            s.y += s.speed;
+            if(s.y > canvas.height) s.y = 0;
+            
+            // Efek twinkle
+            s.opacity += (Math.random() - 0.5) * 0.05;
+            if(s.opacity < 0.1) s.opacity = 0.1;
+            if(s.opacity > 1) s.opacity = 1;
         });
-        requestAnimationFrame(animate);
+        requestAnimationFrame(drawStars);
     }
-    window.addEventListener('resize', resize);
-    resize(); animate();
+
+    window.addEventListener('resize', initStars);
+    initStars();
+    drawStars();
 </script>
 
 </body>
