@@ -1,49 +1,276 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hogwarts Sorting Hat</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Sorting Hat Ceremony</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Poppins:wght@300;400&display=swap');
+
+*{box-sizing:border-box}
+body{
+ margin:0;
+ min-height:100vh;
+ font-family:Poppins,sans-serif;
+ color:#eee;
+ background:radial-gradient(circle at top,#0a0f2a,#000);
+ overflow-x:hidden;
+}
+
+/* STARFIELD */
+.stars,.stars2{
+ position:fixed;
+ inset:-50%;
+ background-repeat:repeat;
+ z-index:-2;
+ animation:drift 160s linear infinite;
+}
+.stars{
+ background-image:radial-gradient(#ffffff55 1px,transparent 1px);
+ background-size:90px 90px;
+}
+.stars2{
+ background-image:radial-gradient(#88aaff88 1px,transparent 1px);
+ background-size:140px 140px;
+ animation-duration:240s;
+}
+@keyframes drift{
+ from{transform:translate(0,0)}
+ to{transform:translate(-600px,-600px)}
+}
+
+.container{
+ max-width:900px;
+ margin:auto;
+ padding:40px 20px 90px;
+ text-align:center;
+}
+
+h1{
+ font-family:Cinzel,serif;
+ font-size:2.7rem;
+ letter-spacing:4px;
+ text-shadow:0 0 20px #7aa2ff;
+}
+
+/* SORTING HAT (REALISTIC SVG) */
+.hat{
+ width:260px;
+ margin:30px auto;
+ animation:float 5s ease-in-out infinite;
+ filter:drop-shadow(0 15px 25px #000);
+}
+@keyframes float{
+ 0%,100%{transform:translateY(0)}
+ 50%{transform:translateY(-14px)}
+}
+
+/* QUIZ BOX */
+.quiz-box{
+ position:relative;
+ margin-top:40px;
+ padding:40px 28px;
+ background:linear-gradient(180deg,#060b2e,#020318);
+ border-radius:26px;
+ box-shadow:0 0 45px #3a5cff33;
+}
+
+/* moving glowing corners */
+.quiz-box::before{
+ content:"";
+ position:absolute;
+ inset:-3px;
+ border-radius:28px;
+ padding:3px;
+ background:linear-gradient(120deg,
+   transparent 30%,
+   #9fd4ff,
+   #ffffff,
+   #9fd4ff,
+   transparent 70%);
+ animation:glow 4s linear infinite;
+ mask:
+  linear-gradient(#000 0 0) content-box,
+  linear-gradient(#000 0 0);
+ mask-composite:exclude;
+}
+@keyframes glow{
+ from{background-position:0%}
+ to{background-position:200%}
+}
+
+.question{
+ font-size:1.25rem;
+ margin-bottom:25px;
+}
+
+.options button{
+ width:100%;
+ margin:10px 0;
+ padding:15px;
+ border-radius:16px;
+ background:rgba(15,20,80,.55);
+ border:1px solid #6a8cff55;
+ color:#fff;
+ cursor:pointer;
+ transition:.35s;
+}
+.options button:hover{
+ background:rgba(90,120,255,.25);
+ box-shadow:0 0 18px #8fb3ff;
+ transform:translateY(-2px);
+}
+
+/* RESULT */
+.result{
+ margin-top:70px;
+ animation:reveal 2.2s ease forwards;
+}
+@keyframes reveal{
+ from{opacity:0;transform:translateY(40px)}
+ to{opacity:1;transform:none}
+}
+
+.house-name{
+ font-family:Cinzel,serif;
+ font-size:2.4rem;
+ letter-spacing:5px;
+ margin-top:10px;
+}
+
+.house-logo{
+ width:240px;
+ margin:30px auto;
+ animation:pulse 3s infinite;
+}
+@keyframes pulse{
+ 0%,100%{filter:drop-shadow(0 0 12px currentColor)}
+ 50%{filter:drop-shadow(0 0 28px #fff)}
+}
+
+.desc{
+ max-width:680px;
+ margin:25px auto;
+ line-height:1.8;
+}
+
+.attr{
+ font-style:italic;
+ color:#cfd9ff;
+}
+</style>
 </head>
+
 <body>
+<div class="stars"></div>
+<div class="stars2"></div>
 
-    <canvas id="star-canvas"></canvas>
+<div class="container">
+<h1>Sorting Hat Ceremony</h1>
 
-    <div class="container">
-        <div id="start-screen" class="fade-in">
-            <img src="https://www.pngall.com/wp-content/uploads/11/Magic-Hat-PNG-Image.png" class="sorting-hat-img" alt="Sorting Hat">
-            <h1 class="glow-text">The Sorting Hat</h1>
-            <p class="subtitle">TEMUKAN TAKDIRMU DI HOGWARTS</p>
-            <button class="btn-magic" onclick="startQuiz()">MULAI UPACARA</button>
-        </div>
+<!-- REALISTIC FAN-ART SORTING HAT -->
+<svg class="hat" viewBox="0 0 300 260">
+ <defs>
+  <linearGradient id="cloth" x1="0" x2="0" y1="0" y2="1">
+   <stop offset="0%" stop-color="#7a5536"/>
+   <stop offset="100%" stop-color="#3b2416"/>
+  </linearGradient>
+ </defs>
+ <path d="M70 210 Q150 235 230 210 L215 195 Q150 185 85 195Z" fill="#2a1a10"/>
+ <path d="M105 40 Q150 10 195 40 L230 210 Q150 185 70 210Z" fill="url(#cloth)"/>
+ <path d="M135 95 Q150 85 165 95" stroke="#1b0e07" stroke-width="4" fill="none"/>
+ <circle cx="145" cy="105" r="3" fill="#0b0502"/>
+</svg>
 
-        <div id="quiz-screen" class="quiz-box hidden">
-            <div class="corner top-left"></div><div class="corner top-right"></div>
-            <div class="corner bottom-left"></div><div class="corner bottom-right"></div>
-            <h2 id="question-text">Membaca Pikiran...</h2>
-            <div id="options-container"></div>
-        </div>
+<div class="quiz-box" id="quiz"></div>
+</div>
 
-        <div id="result-screen" class="hidden">
-            <div class="result-content">
-                <img id="house-img" src="" class="house-logo">
-                <h1 id="house-name">HOUSE</h1>
-                
-                <div id="attr-list" class="attr-container"></div>
-                
-                <p id="house-desc" class="desc-text"></p>
-                
-                <div class="footer-note">
-                    <p>KEPUTUSAN INI MUTLAK.</p>
-                    <button onclick="location.reload()" class="btn-reset">Ulangi Seleksi</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<script>
+if(localStorage.getItem("sorting_done")){
+ quiz.innerHTML="The Sorting Hat has spoken. It will not choose again.";
+}else{
 
-    <script src="script.js"></script>
+const Q=[
+{q:"Saat menghadapi konflik besar, apa yang kamu lakukan?",
+ a:[
+  ["Menghadapinya dengan berani","Gryffindor"],
+  ["Merencanakan dengan licik","Slytherin"],
+  ["Menganalisis dengan tenang","Ravenclaw"],
+  ["Menjaga semua tetap aman","Hufflepuff"]
+ ]},
+{q:"Nilai terpenting bagimu?",
+ a:[
+  ["Keberanian","Gryffindor"],
+  ["Ambisi","Slytherin"],
+  ["Kecerdasan","Ravenclaw"],
+  ["Kesetiaan","Hufflepuff"]
+ ]},
+{q:"Orang lain melihatmu sebagai?",
+ a:[
+  ["Pemimpin","Gryffindor"],
+  ["Penguasa","Slytherin"],
+  ["Pemikir","Ravenclaw"],
+  ["Sahabat","Hufflepuff"]
+ ]},
+{q:"Lingkungan favorit?",
+ a:[
+  ["Penuh tantangan","Gryffindor"],
+  ["Kekuatan & pengaruh","Slytherin"],
+  ["Pengetahuan","Ravenclaw"],
+  ["Ketenangan","Hufflepuff"]
+ ]},
+{q:"Jika gagal?",
+ a:[
+  ["Bangkit","Gryffindor"],
+  ["Mencari cara lain","Slytherin"],
+  ["Mengevaluasi","Ravenclaw"],
+  ["Bertahan","Hufflepuff"]
+ ]}
+];
+
+let i=0,score={Gryffindor:0,Slytherin:0,Ravenclaw:0,Hufflepuff:0};
+const quiz=document.getElementById("quiz");
+
+function show(){
+ let q=Q[i];
+ quiz.innerHTML=`<div class="question">${q.q}</div>
+ <div class="options">
+ ${q.a.map(x=>`<button onclick="pick('${x[1]}')">${x[0]}</button>`).join("")}
+ </div>`;
+}
+window.pick=h=>{
+ score[h]++; i++;
+ i<Q.length?show():finish();
+}
+
+function finish(){
+ localStorage.setItem("sorting_done","1");
+ let h=Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
+
+ const data={
+  Gryffindor:{c:"#b22222",d:"Keberanian, tekad, dan jiwa kepemimpinan mengalir dalam dirimu.",a:"Api · Berani · Berjiwa pemimpin"},
+  Slytherin:{c:"#1e7f4d",d:"Ambisi dan kecerdikan membentuk langkahmu menuju puncak.",a:"Air · Ambisi · Strategis"},
+  Ravenclaw:{c:"#2b4ea1",d:"Pikiran tajam dan cinta akan pengetahuan adalah kekuatanmu.",a:"Udara · Cerdas · Analitis"},
+  Hufflepuff:{c:"#caa400",d:"Kesetiaan dan ketekunan menjadikanmu fondasi yang kuat.",a:"Tanah · Setia · Tulus"}
+ };
+
+ quiz.innerHTML=`
+ <div class="result" style="color:${data[h].c}">
+  <div class="house-name">${h}</div>
+
+  <!-- FAN ART HOUSE CREST -->
+  <svg class="house-logo" viewBox="0 0 200 240">
+   <path d="M20 20 H180 V150 Q100 220 20 150Z" fill="currentColor" opacity=".85"/>
+   <circle cx="100" cy="110" r="38" fill="#ffffffcc"/>
+  </svg>
+
+  <div class="desc">${data[h].d}</div>
+  <div class="attr">${data[h].a}</div>
+ </div>`;
+}
+show();
+}
+</script>
 </body>
 </html>
