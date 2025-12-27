@@ -2,312 +2,298 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Hogwarts Sorting Hat Ceremony</title>
+<title>Sorting Hat Ceremony - Hogwarts Edition</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;700&family=Spectral:ital,wght@0,300;0,500;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Poppins:wght@300;400&display=swap');
 
 * { box-sizing: border-box; }
 
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: 'Spectral', serif;
-    color: #e0d5b1;
-    background: #050505;
-    background: radial-gradient(circle at center, #1a120b 0%, #000 100%);
+    font-family: 'Poppins', sans-serif;
+    color: #eaeaff;
+    background: #000;
+    background: radial-gradient(circle at top, #1a0f00, #000); /* Warna lebih warm ala kastil */
     overflow-x: hidden;
     display: flex;
     justify-content: center;
 }
 
-/* ===== ATMOSPHERIC BACKGROUND ===== */
-.magic-dust {
+/* ===== STAR BACKGROUND ===== */
+.stars-container {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1;
-    background: url('https://www.transparenttextures.com/patterns/stardust.png');
-    opacity: 0.3;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.stars, .stars2 {
+    position: absolute;
+    width: 200%; height: 200%;
+    background-repeat: repeat;
+    background-image: radial-gradient(1px 1px at 20px 30px, #eee, rgba(0,0,0,0)),
+                      radial-gradient(1.5px 1.5px at 40px 70px, #fff, rgba(0,0,0,0)),
+                      radial-gradient(1px 1px at 50px 160px, #ddd, rgba(0,0,0,0));
+    background-size: 200px 200px;
+    animation: moveStars 100s linear infinite;
+}
+
+@keyframes moveStars {
+    from { transform: translate(0,0); }
+    to { transform: translate(-50%, -50%); }
 }
 
 /* ===== CONTAINER ===== */
 .container {
-    max-width: 800px;
+    max-width: 820px;
     width: 100%;
     padding: 40px 20px;
     text-align: center;
     position: relative;
+    z-index: 1;
 }
 
 h1 {
-    font-family: 'Cinzel Decorative', cursive;
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    color: #d4af37;
-    text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-    margin-bottom: 10px;
-}
-
-.subtitle {
     font-family: 'Cinzel', serif;
+    font-size: 2.2rem; /* Ukuran font disesuaikan */
     letter-spacing: 3px;
-    font-size: 0.9rem;
-    color: #8e7f55;
-    margin-bottom: 30px;
-    text-transform: uppercase;
+    color: #d4af37; /* Gold Hogwarts */
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+    margin-bottom: 0;
 }
 
-/* ===== REALISTIC HAT SECTION ===== */
-.hat-wrapper {
-    position: relative;
-    height: 220px;
-    margin-bottom: 40px;
+/* ===== HAT SVG (Sesuai Permintaan) ===== */
+.hat {
+    width: 160px;
+    margin: 15px auto;
+    filter: drop-shadow(0 0 15px rgba(0,0,0,0.5));
+    animation: floatHat 4s ease-in-out infinite;
 }
 
-.sorting-hat-img {
-    width: 200px;
-    filter: drop-shadow(0 0 25px rgba(0,0,0,0.8));
-    animation: sway 6s ease-in-out infinite;
+@keyframes floatHat {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
 }
 
-@keyframes sway {
-    0%, 100% { transform: translateY(0) rotate(-3deg); }
-    50% { transform: translateY(-15px) rotate(3deg); }
-}
-
-/* ===== QUIZ CARD ===== */
+/* ===== QUIZ BOX ===== */
 .quiz-box {
-    background: rgba(20, 15, 10, 0.9);
-    border: 2px solid #3d2f1e;
-    border-radius: 5px;
-    padding: 40px;
-    box-shadow: 0 0 50px rgba(0,0,0,1), inset 0 0 20px rgba(212, 175, 55, 0.1);
     position: relative;
-}
-
-.quiz-box::before {
-    content: "";
-    position: absolute;
-    top: 10px; left: 10px; right: 10px; bottom: 10px;
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    pointer-events: none;
+    margin-top: 25px;
+    padding: 35px 25px;
+    background: rgba(15, 10, 5, 0.9);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.7);
 }
 
 .question {
-    font-family: 'Cinzel', serif;
-    font-size: 1.4rem;
-    margin-bottom: 30px;
-    line-height: 1.4;
+    font-size: 1.15rem; /* Tidak terlalu besar */
+    margin-bottom: 25px;
+    font-weight: 400;
+    color: #f0e6d2;
 }
 
 .options button {
     display: block;
     width: 100%;
-    margin: 15px 0;
-    padding: 18px;
-    background: rgba(45, 34, 22, 0.4);
-    border: 1px solid #5a4631;
-    color: #d1c4a0;
-    font-family: 'Spectral', serif;
-    font-size: 1.1rem;
+    margin: 10px 0;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    background: rgba(255, 255, 255, 0.03);
+    color: #eaeaff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem; /* Proporsional */
     cursor: pointer;
-    transition: all 0.4s;
+    transition: all .3s ease;
 }
 
 .options button:hover {
-    background: #d4af37;
-    color: #1a120b;
-    border-color: #fff;
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+    background: rgba(212, 175, 55, 0.15);
+    border-color: #d4af37;
+    transform: translateY(-2px);
 }
 
-/* ===== RESULT STYLING ===== */
-.result-title {
-    font-family: 'Cinzel Decorative', cursive;
-    font-size: 3.5rem;
-    margin: 20px 0;
+/* ===== RESULT ===== */
+.result {
+    animation: fadeIn 1s ease-out forwards;
 }
 
-.crest-img {
-    width: 180px;
-    margin: 20px 0;
-    filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.description {
-    font-size: 1.2rem;
-    font-style: italic;
-    line-height: 1.6;
-    margin-bottom: 25px;
+.house-img {
+    width: 140px; /* Ukuran logo asrama */
+    height: auto;
+    margin: 15px auto;
 }
 
-.house-traits {
-    display: inline-block;
-    padding: 8px 25px;
-    border-top: 1px solid #d4af37;
-    border-bottom: 1px solid #d4af37;
+.house-name {
     font-family: 'Cinzel', serif;
-    letter-spacing: 2px;
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    margin: 5px 0;
 }
 
+.desc {
+    max-width: 550px;
+    margin: 10px auto;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #d1c4a9;
+}
+
+.attr {
+    display: inline-block;
+    padding: 8px 18px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    margin-top: 15px;
+    font-size: 0.85rem;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
 </style>
 </head>
+
 <body>
+<div class="stars-container">
+    <div class="stars"></div>
+</div>
 
-<div class="magic-dust"></div>
+<div class="container" id="app">
+    <h1>The Sorting Hat</h1>
 
-<div class="container">
-    <div class="header">
-        <h1>Hogwarts</h1>
-        <div class="subtitle">Sorting Ceremony</div>
-    </div>
+    <svg class="hat" viewBox="0 0 200 200">
+        <path d="M30 160 C 30 140, 170 140, 170 160 C 170 180, 30 180, 30 160" fill="#3b2b1f"/>
+        <path d="M50 150 L100 20 L150 150 Q100 135 50 150" fill="#4a3526"/>
+        <path d="M85 80 Q100 70 115 80" stroke="#2a1d15" stroke-width="3" fill="none"/>
+        <path d="M80 110 Q100 100 120 110" stroke="#2a1d15" stroke-width="3" fill="none"/>
+        <path d="M85 95 Q90 90 95 95" stroke="#000" stroke-width="2" fill="none"/>
+        <path d="M105 95 Q110 90 115 95" stroke="#000" stroke-width="2" fill="none"/>
+    </svg>
 
-    <div class="hat-wrapper">
-        <svg class="sorting-hat-img" viewBox="0 0 200 200">
-            <defs>
-                <radialGradient id="hatGrad" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" style="stop-color:#5a4631" />
-                    <stop offset="100%" style="stop-color:#2d2216" />
-                </radialGradient>
-            </defs>
-            <path d="M20 170 Q100 150 180 170 Q100 190 20 170" fill="#2d2216" />
-            <path d="M45 160 L100 20 L155 160 Q100 145 45 160" fill="url(#hatGrad)" />
-            <path d="M75 110 Q100 95 125 110" fill="none" stroke="#1a120b" stroke-width="4" stroke-linecap="round" />
-            <path d="M80 85 Q90 80 95 85" fill="none" stroke="#1a120b" stroke-width="2" />
-            <path d="M105 85 Q115 80 120 85" fill="none" stroke="#1a120b" stroke-width="2" />
-            <path d="M60 160 Q100 155 140 160" fill="none" stroke="#1a120b" stroke-width="5" opacity="0.3" />
-        </svg>
-    </div>
-
-    <div class="quiz-box" id="quiz-container">
-        </div>
+    <div class="quiz-box" id="quiz"></div>
 </div>
 
 <script>
-const houses = {
-    Gryffindor: {
-        color: "#ae0001",
-        accent: "#eeba30",
-        desc: "Di mana keberanian, kegagahan, dan ksatria berada. Mereka yang berani membela apa yang benar.",
-        traits: "Keberanian · Tekad · Ksatria",
-        crest: "https://vignette.wikia.nocookie.net/harrypotter/images/b/b1/Gryffindor_Clear_Crest.png"
-    },
-    Slytherin: {
-        color: "#2a623d",
-        accent: "#aaaaaa",
-        desc: "Di sini kau akan menemukan teman sejati, orang-orang licik yang menggunakan segala cara untuk mencapai tujuan.",
-        traits: "Ambisi · Kecerdikan · Kepemimpinan",
-        crest: "https://vignette.wikia.nocookie.net/harrypotter/images/0/00/Slytherin_Clear_Crest.png"
-    },
-    Ravenclaw: {
-        color: "#222f5b",
-        accent: "#946b2d",
-        desc: "Bagi mereka yang memiliki kecerdasan dan belajar adalah segalanya. Tempat bagi mereka yang berakal sehat.",
-        traits: "Kecerdasan · Kreativitas · Kebijaksanaan",
-        crest: "https://vignette.wikia.nocookie.net/harrypotter/images/4/4e/Ravenclaw_Clear_Crest.png"
-    },
-    Hufflepuff: {
-        color: "#f0c75e",
-        accent: "#000000",
-        desc: "Di mana mereka adil dan setia. Mereka sabar, tulus, dan tidak takut bekerja keras.",
-        traits: "Kesetiaan · Kerja Keras · Keadilan",
-        crest: "https://vignette.wikia.nocookie.net/harrypotter/images/0/06/Hufflepuff_Clear_Crest.png"
-    }
-};
+if (localStorage.getItem("hogwarts_done")) {
+    document.getElementById("quiz").innerHTML =
+        "<p style='font-size: 1rem;'>Topi Seleksi telah bicara.<br><b style='color:#d4af37'>Keputusan Hogwarts tidak bisa diubah.</b></p>";
+} else {
 
 const questions = [
-    {
-        q: "Sebuah jalan bercabang di depanmu. Ke mana langkahmu tertuju?",
-        a: [
-            { t: "Jalan setapak yang diterangi matahari dan penuh tantangan", h: "Gryffindor" },
-            { t: "Lorong gelap yang menjanjikan rahasia kuno dan kekuatan", h: "Slytherin" },
-            { t: "Jalan menuju perpustakaan tua yang sunyi", h: "Ravenclaw" },
-            { t: "Jalan lebar yang menuju ke desa yang hangat dan ramah", h: "Hufflepuff" }
-        ]
-    },
-    {
-        q: "Apa yang paling ingin kamu tinggalkan sebagai warisan?",
-        a: [
-            { t: "Kisah kepahlawanan yang menginspirasi", h: "Gryffindor" },
-            { t: "Nama besar yang disegani dan dihormati", h: "Slytherin" },
-            { t: "Penemuan atau karya ilmiah yang luar biasa", h: "Ravenclaw" },
-            { t: "Kenangan akan kebaikan dan kesetiaan", h: "Hufflepuff" }
-        ]
-    },
-    {
-        q: "Bagaimana cara kamu menghadapi musuh?",
-        a: [
-            { t: "Melawannya secara terbuka dan jantan", h: "Gryffindor" },
-            { t: "Mencari kelemahannya dan menyerang saat dia lengah", h: "Slytherin" },
-            { t: "Mencoba memahami motifnya dan beradu argumen", h: "Ravenclaw" },
-            { t: "Mencoba berdamai atau melindungi teman-temanmu", h: "Hufflepuff" }
-        ]
-    },
-    {
-        q: "Jika bisa memilih ramuan, mana yang akan kamu minum?",
-        a: [
-            { t: "Ramuan yang memberikan keberanian tanpa batas", h: "Gryffindor" },
-            { t: "Ramuan yang memberikan kekuasaan mutlak", h: "Slytherin" },
-            { t: "Ramuan yang memberimu pengetahuan tak terbatas", h: "Ravenclaw" },
-            { t: "Ramuan yang menjamin kebahagiaan bagi orang tersayang", h: "Hufflepuff" }
-        ]
-    }
+ {
+  q:"Sifat mana yang paling kamu banggakan dalam dirimu?",
+  a:[
+    {t:"Keberanian dan tekad yang kuat",h:"Gryffindor"},
+    {t:"Ambisi dan keinginan untuk menang",h:"Slytherin"},
+    {t:"Kecerdasan dan wawasan luas",h:"Ravenclaw"},
+    {t:"Kesetiaan dan kerja keras",h:"Hufflepuff"}
+  ]
+ },
+ {
+  q:"Jika kamu menemukan dompet penuh emas di jalan, apa yang kamu lakukan?",
+  a:[
+    {t:"Mencarikan pemiliknya meskipun sulit",h:"Gryffindor"},
+    {t:"Menyimpannya, ini adalah kesempatan",h:"Slytherin"},
+    {t:"Menganalisis kartu di dalamnya untuk melacak",h:"Ravenclaw"},
+    {t:"Menyerahkannya ke pihak berwajib segera",h:"Hufflepuff"}
+  ]
+ },
+ {
+  q:"Apa ketakutan terbesarmu?",
+  a:[
+    {t:"Terlihat lemah atau penakut",h:"Gryffindor"},
+    {t:"Kegagalan dan menjadi orang biasa saja",h:"Slytherin"},
+    {t:"Ketidaktahuan atau terlihat bodoh",h:"Ravenclaw"},
+    {t:"Kehilangan kepercayaan dari teman",h:"Hufflepuff"}
+  ]
+ },
+ {
+  q:"Pilih artefak sihir impianmu:",
+  a:[
+    {t:"Pedang legendaris berlapis perak",h:"Gryffindor"},
+    {t:"Tongkat sihir paling kuat di dunia",h:"Slytherin"},
+    {t:"Mahkota yang memberi kebijaksanaan",h:"Ravenclaw"},
+    {t:"Piala yang tak pernah kering",h:"Hufflepuff"}
+  ]
+ }
 ];
 
-let currentIndex = 0;
-let scores = { Gryffindor: 0, Slytherin: 0, Ravenclaw: 0, Hufflepuff: 0 };
+let index = 0;
+let score = {Gryffindor:0, Slytherin:0, Ravenclaw:0, Hufflepuff:0};
+const quiz = document.getElementById("quiz");
 
-const quizBox = document.getElementById("quiz-container");
-
-function renderQuestion() {
-    if (localStorage.getItem("hogwarts_sorted")) {
-        quizBox.innerHTML = "<h3>Topi Seleksi telah menetapkan takdirmu.</h3><p>Keputusan Hogwarts bersifat mutlak.</p>";
-        return;
-    }
-
-    let q = questions[currentIndex];
-    quizBox.innerHTML = `
-        <div class="question">${q.q}</div>
-        <div class="options">
-            ${q.a.map(opt => `<button onclick="selectOption('${opt.h}')">${opt.t}</button>`).join('')}
-        </div>
-    `;
+function showQ() {
+ let q = questions[index];
+ quiz.innerHTML = `
+   <div class="question">${q.q}</div>
+   <div class="options">
+     ${q.a.map(o=>`<button onclick="pick('${o.h}')">${o.t}</button>`).join("")}
+   </div>`;
 }
 
-window.selectOption = function(house) {
-    scores[house]++;
-    currentIndex++;
-    if (currentIndex < questions.length) {
-        renderQuestion();
-    } else {
-        showResult();
-    }
-};
-
-function showResult() {
-    localStorage.setItem("hogwarts_sorted", "true");
-    let winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
-    let data = houses[winner];
-
-    quizBox.innerHTML = `
-        <div class="result-area">
-            <div class="subtitle" style="color:${data.accent}">Better be...</div>
-            <div class="result-title" style="color:${data.accent}; text-shadow: 0 0 20px ${data.color}">${winner}!</div>
-            <img src="${data.crest}" class="crest-img" alt="${winner}">
-            <div class="description">"${data.desc}"</div>
-            <div class="house-traits" style="color:${data.accent}; border-color:${data.accent}">${data.traits}</div>
-            <br>
-            <button onclick="location.reload()" style="margin-top:40px; background:none; border:none; color:#8e7f55; cursor:pointer; text-decoration:underline;">Tutup Kitab</button>
-        </div>
-    `;
-    
-    // Memberikan sedikit efek warna pada box berdasarkan asrama
-    quizBox.style.boxShadow = `0 0 60px ${data.color}44`;
-    quizBox.style.borderColor = data.accent;
+window.pick = function(h) {
+ score[h]++;
+ index++;
+ if(index < questions.length) {
+    showQ();
+ } else {
+    result();
+ }
 }
 
-renderQuestion();
+function result() {
+ localStorage.setItem("hogwarts_done","yes");
+ let house = Object.keys(score).reduce((a,b)=>score[a]>score[b]?a:b);
+
+ const data = {
+  Gryffindor:{
+    desc:"Tempat bagi mereka yang berani dan ksatria. Kamu memiliki hati yang membara untuk membela yang benar.",
+    attr:"Warna: Merah & Emas · Simbol: Singa",
+    color:"#ae0001",
+    logo:"https://www.pngall.com/wp-content/uploads/13/Gryffindor-Logo-PNG-File.png"
+  },
+  Slytherin:{
+    desc:"Bagi mereka yang ambisius dan cerdik. Kamu akan menggunakan segala cara untuk mencapai puncak kesuksesan.",
+    attr:"Warna: Hijau & Perak · Simbol: Ular",
+    color:"#2a623d",
+    logo:"https://www.pngall.com/wp-content/uploads/13/Slytherin-Logo-PNG-Image.png"
+  },
+  Ravenclaw:{
+    desc:"Tempat bagi mereka yang cerdas dan kreatif. Bagimu, pengetahuan adalah harta yang paling berharga.",
+    attr:"Warna: Biru & Perunggu · Simbol: Elang",
+    color:"#222f5b",
+    logo:"https://www.pngall.com/wp-content/uploads/13/Ravenclaw-Logo-PNG-Cutout.png"
+  },
+  Hufflepuff:{
+    desc:"Tempat bagi mereka yang setia dan jujur. Kamu tidak takut bekerja keras dan selalu adil pada sesama.",
+    attr:"Warna: Kuning & Hitam · Simbol: Luwak",
+    color:"#ecb939",
+    logo:"https://www.pngall.com/wp-content/uploads/13/Hufflepuff-Logo-PNG-Image.png"
+  }
+ };
+
+ quiz.style.borderColor = data[house].color;
+ quiz.innerHTML = `
+ <div class="result">
+   <div class="house-name" style="color:${data[house].color};">${house}</div>
+   <img src="${data[house].logo}" class="house-img" alt="Logo ${house}">
+   <div class="desc">${data[house].desc}</div>
+   <div class="attr">${data[house].attr}</div>
+   <br>
+   <button onclick="location.reload()" style="margin-top:20px; background:none; border:none; color:#d4af37; cursor:pointer; font-size:0.8rem; text-decoration:underline;">Selesai</button>
+ </div>`;
+}
+
+showQ();
+}
 </script>
-
 </body>
 </html>
