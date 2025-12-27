@@ -1,0 +1,84 @@
+* { box-sizing: border-box; }
+body, html {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    background-color: #050508;
+    font-family: 'Quicksand', sans-serif;
+    color: white; overflow-x: hidden;
+}
+
+#star-canvas { position: fixed; top: 0; left: 0; z-index: -1; }
+
+.container {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; min-height: 100vh; padding: 20px;
+}
+
+/* Hat Animation */
+.sorting-hat-img {
+    width: 220px; filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.4));
+    animation: floating 4s ease-in-out infinite;
+}
+@keyframes floating {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+.glow-text {
+    font-family: 'Cinzel Decorative', cursive; color: #d4af37;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.6); font-size: 3rem; margin: 20px 0 10px;
+}
+
+.subtitle { letter-spacing: 4px; color: #888; font-size: 0.8rem; margin-bottom: 30px; }
+
+.btn-magic {
+    padding: 15px 40px; background: transparent; border: 1px solid #d4af37;
+    color: #d4af37; font-family: 'Cinzel Decorative'; cursor: pointer;
+    transition: 0.4s; letter-spacing: 2px;
+}
+.btn-magic:hover { background: rgba(212, 175, 55, 0.1); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+
+/* Quiz Box */
+.quiz-box {
+    position: relative; width: 100%; max-width: 550px;
+    background: rgba(10, 10, 25, 0.9); padding: 50px 40px;
+    backdrop-filter: blur(15px); text-align: center; border-radius: 10px;
+}
+
+/* Corner Glow Effects */
+.corner { position: absolute; width: 35px; height: 35px; border: 3px solid transparent; animation: cornerPulse 2s infinite alternate; }
+.top-left { top: -5px; left: -5px; border-top-color: #fff; border-left-color: #00d4ff; }
+.top-right { top: -5px; right: -5px; border-top-color: #fff; border-right-color: #00d4ff; }
+.bottom-left { bottom: -5px; left: -5px; border-bottom-color: #fff; border-left-color: #00d4ff; }
+.bottom-right { bottom: -5px; right: -5px; border-bottom-color: #fff; border-right-color: #00d4ff; }
+
+@keyframes cornerPulse {
+    0% { filter: drop-shadow(0 0 2px #00d4ff); opacity: 0.5; }
+    100% { filter: drop-shadow(0 0 15px #fff); opacity: 1; }
+}
+
+.btn-option {
+    display: block; width: 100%; padding: 15px; margin: 12px 0;
+    background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white; cursor: pointer; transition: 0.3s; border-radius: 8px;
+}
+.btn-option:hover { background: rgba(0, 212, 255, 0.1); border-color: #00d4ff; transform: translateX(5px); }
+
+/* Result Page */
+.house-logo { width: 180px; filter: drop-shadow(0 0 40px currentColor); margin-bottom: 10px; }
+#house-name { font-family: 'Cinzel Decorative'; font-size: 3.5rem; margin: 0; letter-spacing: 6px; }
+
+.attr-container { display: flex; justify-content: center; gap: 12px; margin: 30px 0; flex-wrap: wrap; }
+.attr-pill {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255, 255, 255, 0.08); padding: 10px 20px;
+    border-radius: 50px; border: 1px solid rgba(212, 175, 55, 0.4);
+}
+.attr-pill i { width: 18px; height: 18px; color: #d4af37; }
+
+.desc-text { max-width: 600px; line-height: 1.8; color: #ccc; font-size: 1.1rem; margin: 0 auto; }
+.footer-note { margin-top: 50px; border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: 20px; }
+.btn-reset { background: none; border: none; color: #00d4ff; cursor: pointer; text-decoration: underline; margin-top: 10px; }
+
+.hidden { display: none; }
+.fade-in { animation: fadeIn 2s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
