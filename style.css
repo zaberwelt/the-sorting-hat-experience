@@ -1,118 +1,88 @@
 :root{
   --bg-1:#05060a;
-  --bg-2:#071026;
   --accent:#00d4ff;
   --gold:#d4af37;
-  --glass: rgba(255,255,255,0.05);
 }
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:'Quicksand',system-ui,Segoe UI,Roboto; background: linear-gradient(180deg,var(--bg-1) 0%, #02030a 100%); color:#eaeef2; overflow:hidden;}
-/* Canvas layer */
+html,body{height:100%;margin:0;font-family:'Quicksand',system-ui,Segoe UI,Roboto; background: linear-gradient(180deg,var(--bg-1) 0%, #02030a 100%); color:#eaeef2;}
+
+/* Canvas layer - fixed */
 #bg-canvas{position:fixed;inset:0;z-index:0;display:block}
-/* subtle vignette and particles overlay */
-.overlay{
-  position:fixed;inset:0;z-index:1;pointer-events:none;
+.overlay{position:fixed;inset:0;z-index:1;pointer-events:none;
   background: radial-gradient(1200px 600px at 10% 10%, rgba(10,18,30,0.35), transparent 15%),
               radial-gradient(900px 600px at 90% 90%, rgba(3,6,15,0.45), transparent 15%),
-              linear-gradient(180deg, rgba(0,0,0,0.15), transparent 50%);
-  mix-blend-mode: screen;
-}
+              linear-gradient(180deg, rgba(0,0,0,0.12), transparent 50%);}
 
-/* Main container */
-.stage{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;}
-.card {
-  width:100%;max-width:720px; margin:auto; text-align:center; position:relative; z-index:3;
-  -webkit-font-smoothing:antialiased;
-}
+/* confetti on top of UI but pointer-events none */
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:5}
 
-header{margin-bottom:16px}
-h1{font-family:'Cinzel Decorative',serif;color:var(--gold);letter-spacing:4px;margin:8px 0;font-size:2.4rem;text-transform:uppercase}
-p.lead{color:#9fbcd6;letter-spacing:3px;margin:0 0 18px;font-weight:600}
+/* Main container (above canvases) */
+.stage{position:relative;z-index:3;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;}
+.card {width:100%;max-width:820px;margin:auto;text-align:center;padding:18px;}
 
-/* Sorting hat art (inline SVG shown as image) */
-.hat {
-  width:220px;height:auto;margin:12px auto 8px;display:block;filter:drop-shadow(0 8px 28px rgba(0,0,0,0.8)) drop-shadow(0 0 18px rgba(212,175,55,0.12));
-  animation:hatFloat 4s ease-in-out infinite;
-}
-@keyframes hatFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-18px) rotate(3deg)}}
+/* Header */
+header{margin-bottom:10px}
+h1{font-family:'Cinzel Decorative',serif;color:var(--gold);letter-spacing:4px;margin:8px 0;font-size:2.2rem;text-transform:uppercase}
+p.lead{color:#9fbcd6;letter-spacing:2px;margin:0 0 12px;font-weight:600}
 
-/* QUIZ BOX (mewah) */
+/* Hat */
+.hat{width:200px;height:auto;margin:6px auto;filter:drop-shadow(0 8px 28px rgba(0,0,0,0.8)) drop-shadow(0 0 18px rgba(212,175,55,0.12));animation:hatFloat 4s ease-in-out infinite}
+@keyframes hatFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+
+/* Quiz box */
 .quiz {
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius:14px;padding:28px 26px; position:relative; overflow:visible;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  border-radius:12px;padding:20px 18px; position:relative; overflow:visible;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.6);
   border:1px solid rgba(255,255,255,0.04);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(6px);
 }
 
-.question{font-size:1.05rem;margin:6px 0 18px;color:#e6f4ff;min-height:56px;display:flex;align-items:center;justify-content:center}
-.options{display:flex;flex-direction:column;gap:12px}
+.question{font-size:1.02rem;margin:6px 0 12px;color:#e6f4ff;min-height:56px;display:flex;align-items:center;justify-content:center}
+.options{display:flex;flex-direction:column;gap:10px}
 .opt {
   background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
   border-radius:12px;padding:12px 14px;border:1px solid rgba(255,255,255,0.06);
-  color:#eef7ff;font-weight:600;cursor:pointer;transition:all .28s; position:relative; overflow:hidden;
+  color:#eef7ff;font-weight:700;cursor:pointer;transition:all .22s; position:relative; overflow:hidden;
 }
-.opt:hover{transform:translateY(-6px); box-shadow: 0 10px 26px rgba(0,212,255,0.06), 0 2px 10px rgba(0,0,0,0.5); border-color: rgba(0,212,255,0.22); background: linear-gradient(90deg, rgba(0,212,255,0.04), rgba(255,255,255,0.02))}
-.opt:active{transform:translateY(-2px) scale(.998)}
+.opt:hover{transform:translateY(-6px); box-shadow: 0 10px 26px rgba(0,212,255,0.06); border-color: rgba(0,212,255,0.18)}
+.opt:active{transform:translateY(-2px)}
 .opt .label{display:inline-block;margin-left:8px}
 
-/* Corner decorations: animated bluish-white glow shapes that "breathe" and rotate slightly */
+/* Corners */
 .corners{position:absolute;inset:0;pointer-events:none}
-.corner-dot {
-  position:absolute;width:48px;height:48px;border-radius:8px;
-  background:linear-gradient(135deg, rgba(255,255,255,0.12), rgba(0,212,255,0.12));
-  box-shadow:0 0 10px rgba(0,212,255,0.14), inset 0 0 8px rgba(255,255,255,0.04);
-  opacity:.9; transform-origin:center; animation:cornerMove 3s ease-in-out infinite;
-  filter: blur(0.6px);
-}
-.corner-dot.tl{left:-20px;top:-20px; transform:rotate(-12deg) }
-.corner-dot.tr{right:-20px;top:-20px; transform:rotate(8deg); animation-delay: .4s;}
-.corner-dot.bl{left:-20px;bottom:-20px; transform:rotate(6deg); animation-delay: .8s;}
-.corner-dot.br{right:-20px;bottom:-20px; transform:rotate(-6deg); animation-delay: 1.2s;}
-@keyframes cornerMove{
-  0%{transform:scale(1) rotate(0deg); opacity:.6; filter: drop-shadow(0 0 4px rgba(0,212,255,0.2))}
-  50%{transform:scale(1.18) rotate(6deg); opacity:1; filter: drop-shadow(0 0 18px rgba(255,255,255,0.9))}
-  100%{transform:scale(1) rotate(0deg); opacity:.6}
-}
+.corner-dot {position:absolute;width:46px;height:46px;border-radius:8px;background:linear-gradient(135deg, rgba(255,255,255,0.12), rgba(0,212,255,0.12));box-shadow:0 0 10px rgba(0,212,255,0.14);opacity:.9;transform-origin:center; animation:cornerMove 3s ease-in-out infinite}
+.corner-dot.tl{left:-18px;top:-18px; transform:rotate(-12deg)}
+.corner-dot.tr{right:-18px;top:-18px; transform:rotate(8deg); animation-delay:.4s}
+.corner-dot.bl{left:-18px;bottom:-18px; transform:rotate(6deg); animation-delay:.8s}
+.corner-dot.br{right:-18px;bottom:-18px; transform:rotate(-6deg); animation-delay:1.2s}
+@keyframes cornerMove{0%{transform:scale(1) rotate(0deg); opacity:.6}50%{transform:scale(1.14) rotate(6deg); opacity:1}100%{transform:scale(1) rotate(0deg); opacity:.6}}
 
-/* Start button */
-.btn {
-  display:inline-block;padding:12px 24px;border-radius:999px;background:linear-gradient(90deg,var(--gold), #ffd371); color:#08121a;font-weight:700;border:none;cursor:pointer;
-  box-shadow: 0 10px 30px rgba(212,175,55,0.12), 0 1px 0 rgba(255,255,255,0.08);
-  transition:transform .18s,box-shadow .18s;
-}
-.btn:active{transform:translateY(1px) scale(.997)}
+/* Button */
+.btn{display:inline-block;padding:12px 24px;border-radius:999px;background:linear-gradient(90deg,var(--gold),#ffd371);color:#08121a;font-weight:800;border:none;cursor:pointer;box-shadow:0 8px 26px rgba(212,175,55,0.12)}
+.btn:active{transform:translateY(1px)}
 
-/* RESULT (tanpa kotak) */
-#result {
-  display:none;margin-top:18px; text-align:center; padding:22px 10px;
-  animation:resultIn .9s cubic-bezier(.18,.9,.5,1) both;
-}
-@keyframes resultIn{ from{opacity:0; transform:translateY(18px) scale(.98)} to{opacity:1; transform:none}}
-
-.house-art{
-  width:220px;height:auto;margin:0 auto 8px; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.8)) drop-shadow(0 0 30px currentColor); transition:transform .9s; transform-origin:center;
-}
-.house-name{font-family:'Cinzel Decorative', serif; font-size:2.8rem; margin:12px 0; letter-spacing:5px}
-.house-desc-wrap{display:flex;gap:18px;align-items:flex-start;justify-content:center;flex-wrap:wrap;margin-top:10px}
-.desc-image{width:120px;flex:0 0 120px; border-radius:12px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)); box-shadow: 0 8px 30px rgba(0,0,0,0.6); padding:8px}
+/* Result (no box) */
+#result{display:none;margin-top:18px;text-align:center;padding:16px}
+.house-art{width:200px;height:auto;margin:0 auto 6px;filter:drop-shadow(0 10px 28px rgba(0,0,0,0.7));transition:transform .8s}
+.house-name{font-family:'Cinzel Decorative', serif;font-size:2.4rem;margin:8px 0;letter-spacing:5px}
+.house-desc-wrap{display:flex;gap:14px;align-items:flex-start;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.desc-image{width:120px;flex:0 0 120px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));box-shadow:0 8px 24px rgba(0,0,0,0.5);padding:8px}
 .desc-text{max-width:520px;text-align:left;color:#dfeff9;line-height:1.6;padding:8px 10px;border-radius:10px}
 .attrs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
-.attr-pill{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)); padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.04); font-weight:700; color:#eef8ff}
-
-/* confetti particles (canvas overlay) */
-#confetti{position:fixed;inset:0;pointer-events:none;z-index:4}
+.attr-pill{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);font-weight:700;color:#eef8ff}
 
 /* small footer */
-.note{color:#87c3e8;font-size:12px;margin-top:18px;opacity:.95;letter-spacing:1px}
-/* disabled overlay if already sorted */
-.locked {opacity:0.7;filter:grayscale(.02);pointer-events:none}
-/* small badge shown when already sorted */
-.done-badge {display:inline-block;margin-top:12px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.03);color:#bfefff;border:1px solid rgba(0,212,255,0.08);font-weight:700}
-/* responsive tweaks */
-@media (max-width:520px){
-  .hat{width:160px}
-  .house-art{width:160px}
-  h1{font-size:1.6rem}
-  .house-name{font-size:2rem}
+.note{color:#87c3e8;font-size:12px;margin-top:12px;letter-spacing:1px}
+.locked{opacity:0.8;pointer-events:none}
+.done-badge{display:inline-block;margin-top:12px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.03);color:#bfefff;border:1px solid rgba(0,212,255,0.08);font-weight:700}
+
+/* responsive */
+@media (max-width:560px){
+  .card{padding:12px}
+  .hat{width:150px}
+  .house-art{width:150px}
+  h1{font-size:1.5rem}
+  .house-name{font-size:1.7rem}
+  .desc-image{width:100px;flex-basis:100px}
 }
